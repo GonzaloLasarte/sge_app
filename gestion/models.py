@@ -7,7 +7,7 @@ from django.contrib.auth.models import AbstractUser, Group
 from django.db import connection, models
 from django.urls import reverse
 from django.utils import timezone
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 
 from .validators import ValidateFileSize, validate_dni, validate_movil
 
