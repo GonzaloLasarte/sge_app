@@ -1,0 +1,146 @@
+{% load static %}
+
+<div class="sidebar" data-active-color="rose" data-background-color="white">
+    <div class="sidebar-wrapper">
+      <div class="panel panel-default" id="resetearFiltros">
+        <div class="panel-heading" >
+          <a>
+            <h4 class="panel-title padding-left">Quitar filtros
+            <i class="material-icons">delete</i>
+            </h4>
+          </a>
+        </div>
+      </div>
+      
+    <div class="panel panel-default">
+        <div class="panel-heading" role="tab" id="headingTwo">
+            <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                <h4 class="panel-title padding-left">
+                    Filtros estructura
+                    <i class="material-icons">keyboard_arrow_down</i>
+                </h4>
+            </a>
+        </div>
+        <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo" aria-expanded="false">
+            <div class="panel-body padding-left">
+                <div>
+                    <span class="dropdown">
+                    <button href="#" id="regionesList" class="dropdown-toggle btn btn-primary btn-round" data-toggle="dropdown" aria-expanded="false">Regiones <b class="caret"></b></button>
+                        <ul class="dropdown-menu dropdown-menu-left">
+                          <li class="dropdown-header">Seleccione región</li>
+                          {% for region in regiones %}
+                          <li><a class="regiones-selector" href="#">{{ region }}</a></li>
+                          {% endfor %}
+                        </ul>
+                    <button id="resetRegionesBtn" class="btn btn-primary btn-round btn-fab btn-fab-mini" style="vertical-align: middle; display: none;">
+                        <i class="material-icons">close</i>
+                    <div class="ripple-container"></div></button>
+                      </span>
+                    </div>
+                    <div>
+                      <span class="dropdown">
+                        <button href="#" id="zonasBtn" class="dropdown-toggle btn btn-primary btn-round" data-toggle="dropdown" aria-expanded="false" style="display: none;">Zonas <b class="caret"></b></button>
+                        <ul id="zonasList" class="dropdown-menu dropdown-menu-left">
+                          <li class="dropdown-header">Seleccione zona</li>
+                        </ul>
+                        <button id="resetzonasBtn" class="btn btn-primary btn-round btn-fab btn-fab-mini" style="vertical-align: middle; display: none;">
+                          <i class="material-icons">close</i>
+                        <div class="ripple-container"></div></button>
+                      </span>
+                    </div>
+                    <div>
+                      <span class="dropdown">
+                        <button href="#" id="DGBtn" class="dropdown-toggle btn btn-primary btn-round" data-toggle="dropdown" aria-expanded="false" style="display: none;">DG <b class="caret"></b></button>
+                        <ul id="DGList" class="dropdown-menu dropdown-menu-left">
+                          <li class="dropdown-header">Seleccione DG</li>
+                        </ul>
+                        <button id="resetDGBtn" class="btn btn-primary btn-round btn-fab btn-fab-mini" style="vertical-align: middle; display: none;">
+                          <i class="material-icons">close</i>
+                        <div class="ripple-container"></div></button>
+                      </span>
+                    </div>
+                    <div>
+                      <span class="dropdown">
+                        <button href="#" id="distritosBtn" class="dropdown-toggle btn btn-primary btn-round" data-toggle="dropdown" aria-expanded="false" style="display: none;">Distrito <b class="caret"></b></button>
+                        <ul id="distritosList" class="dropdown-menu dropdown-menu-left">
+                          <li class="dropdown-header">Seleccione distrito</li>
+                        </ul>
+                        <button id="resetdistritosBtn" class="btn btn-primary btn-round btn-fab btn-fab-mini" style="vertical-align: middle; display: none;">
+                          <i class="material-icons">close</i>
+                        <div class="ripple-container"></div></button>
+                      </span>
+                    </div>
+                    <div>
+                      <span class="dropdown">
+                        <button href="#" id="gruposBtn" class="dropdown-toggle btn btn-primary btn-round" data-toggle="dropdown" aria-expanded="false" style="display: none;">Grupo <b class="caret"></b></button>
+                        <ul id="gruposList" class="dropdown-menu dropdown-menu-left">
+                          <li class="dropdown-header">Seleccione grupo</li>
+                        </ul>
+                        <button id="resetgruposBtn" class="btn btn-primary btn-round btn-fab btn-fab-mini" style="vertical-align: middle; display: none;">
+                          <i class="material-icons">close</i>
+                        <div class="ripple-container"></div></button>
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              {% if niveles %}
+              <div class="panel panel-default">
+                <div class="panel-heading" role="tab" id="headingEight">
+                  <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseEight" aria-expanded="false" aria-controls="collapseEight">
+                    <h4 class="panel-title padding-left">
+                      Nivel
+                      <i class="material-icons">keyboard_arrow_down</i>
+                    </h4>
+                  </a>
+                </div>
+                <div id="collapseEight" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingEight" aria-expanded="false">
+                  <div class="panel-body padding-left">
+                    <div>
+                      <span class="dropdown">
+                        <button href="#" id="nivelList" class="dropdown-toggle btn btn-primary btn-round" data-toggle="dropdown" aria-expanded="false">Nivel<b class="caret"></b></button>
+                        <ul class="dropdown-menu dropdown-menu-left">
+                          <li class="dropdown-header">Seleccione nivel</li>
+                          {% for nivel in niveles %}
+                          <li><a class="nivel-selector" href="#">{{ nivel }}</a></li>
+                          {% endfor %}
+                        </ul>
+                        <button id="resetNivelBtn" class="btn btn-primary btn-round btn-fab btn-fab-mini" style="vertical-align: middle; display: none;">
+                          <i class="material-icons">close</i>
+                        <div class="ripple-container"></div></button>
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              {% endif %}
+              <div class="panel panel-default">
+                <div class="panel-heading" role="tab" id="headingSeven">
+                  <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseSeven" aria-expanded="false" aria-controls="collapseSeven">
+                    <h4 class="panel-title padding-left">
+                      Departamento
+                      <i class="material-icons">keyboard_arrow_down</i>
+                    </h4>
+                  </a>
+                </div>
+                <div id="collapseSeven" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingSeven" aria-expanded="false">
+                  <div class="panel-body padding-left">
+                    <div>
+                      <span class="dropdown">
+                        <button href="#" id="departamentosList" class="dropdown-toggle btn btn-primary btn-round" data-toggle="dropdown" aria-expanded="false">Departamento<b class="caret"></b></button>
+                        <ul class="dropdown-menu dropdown-menu-left">
+                          <li class="dropdown-header">Seleccione departamento</li>
+                          {% for departamento in departamentos %}
+                          <li><a class="departamentos-selector" href="#">{{ departamento }}</a></li>
+                          {% endfor %}
+                        </ul>
+                        <button id="resetDepartamentosBtn" class="btn btn-primary btn-round btn-fab btn-fab-mini" style="vertical-align: middle; display: none;">
+                          <i class="material-icons">close</i>
+                        <div class="ripple-container"></div></button>
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+        </div>
+    </div>

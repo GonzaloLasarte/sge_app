@@ -1,0 +1,244 @@
+/* Custom classes */
+
+.no-margin-top {
+  margin-top: 0px;
+}
+
+body, h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4 {
+  font-family: "Ubuntu", "Roboto", "Helvetica", "Arial", sans-serif;
+  font-weight: 300;
+  line-height: 1.5em;
+}
+
+.full-width {
+  width: 100%
+}
+
+.site-header {
+  background-color: white;
+  border-bottom: 2px solid #752936;
+}
+
+.sidebar::before,
+  .off-canvas-sidebar::before {
+    background-color: #fff;
+  }
+
+.sidebar {
+  left: 0px;
+  margin-top: 80px;
+  background: #E0D0D3;
+}
+
+.sidebar .nav li > a, .off-canvas-sidebar .nav li > a {
+  color: #742835;
+}
+
+.sidebar .logo:after, .off-canvas-sidebar .logo:after {
+  background-color: #742835;
+}
+
+.padding-left {
+  padding-left: 10px !important;
+}
+
+.panel-title.padding-left {
+  color: #752936
+}
+
+.toggle-vis {
+  font-weight: bold;
+}
+
+/* .navbar-absolute {
+  /* position: absolute; */
+  width: 100%;
+  padding-top: 10px;
+  z-index: 1000;
+}
+
+.sge-logo {
+  max-width: 100%;
+  max-height: 40px;
+}
+
+.main-panel > .content {
+  position:relative;
+  height: calc(100vh - 80px);
+  margin-top: 80px;
+}
+
+a {
+    color: #3a3a3a;
+}
+
+a:hover {
+  color: #752936 !important;
+}
+
+.navbar .dropdown-menu li a:hover,
+.navbar .dropdown-menu li a:focus,
+.navbar .dropdown-menu li a:active, .navbar.navbar-default .dropdown-menu li a:hover,
+.navbar.navbar-default .dropdown-menu li a:focus,
+.navbar.navbar-default .dropdown-menu li a:active, .bootstrap-table .dropdown-menu li a:hover,
+.bootstrap-table .dropdown-menu li a:focus,
+.bootstrap-table .dropdown-menu li a:active {
+  background-color:#752936;
+  color: #FFFFFF;
+  box-shadow: 0 4px 20px 0px rgba(0, 0, 0, 0.14), 0 7px 10px -5px #6d434a(156, 39, 176, 0.4);
+}
+
+.btn.btn-sienna,
+.navbar .navbar-nav > li > a.btn.btn-sienna {
+  box-shadow: 0 2px 2px 0 rgba(233, 30, 99, 0.14), 0 3px 1px -2px rgba(233, 30, 99, 0.2), 0 1px 5px 0 rgba(233, 30, 99, 0.12);
+}
+.btn.btn-sienna, .btn.btn-sienna:hover, .btn.btn-sienna:focus, .btn.btn-sienna:active, .btn.btn-sienna.active, .btn.btn-sienna:active:focus, .btn.btn-sienna:active:hover, .btn.btn-sienna.active:focus, .btn.btn-sienna.active:hover, .open > .btn.btn-sienna.dropdown-toggle, .open > .btn.btn-sienna.dropdown-toggle:focus, .open > .btn.btn-sienna.dropdown-toggle:hover,
+.navbar .navbar-nav > li > a.btn.btn-sienna,
+.navbar .navbar-nav > li > a.btn.btn-sienna:hover,
+.navbar .navbar-nav > li > a.btn.btn-sienna:focus,
+.navbar .navbar-nav > li > a.btn.btn-sienna:active,
+.navbar .navbar-nav > li > a.btn.btn-sienna.active,
+.navbar .navbar-nav > li > a.btn.btn-sienna:active:focus,
+.navbar .navbar-nav > li > a.btn.btn-sienna:active:hover,
+.navbar .navbar-nav > li > a.btn.btn-sienna.active:focus,
+.navbar .navbar-nav > li > a.btn.btn-sienna.active:hover, .open >
+.navbar .navbar-nav > li > a.btn.btn-sienna.dropdown-toggle, .open >
+.navbar .navbar-nav > li > a.btn.btn-sienna.dropdown-toggle:focus, .open >
+.navbar .navbar-nav > li > a.btn.btn-sienna.dropdown-toggle:hover {
+  background-color: #752936;
+  color: #FFFFFF;
+}
+.btn.btn-sienna:focus, .btn.btn-sienna:active, .btn.btn-sienna:hover,
+.navbar .navbar-nav > li > a.btn.btn-sienna:focus,
+.navbar .navbar-nav > li > a.btn.btn-sienna:active,
+.navbar .navbar-nav > li > a.btn.btn-sienna:hover {
+  box-shadow: 0 14px 26px -12px rgba(233, 30, 99, 0.42), 0 4px 23px 0px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(233, 30, 99, 0.2);
+}
+.btn.btn-sienna.disabled, .btn.btn-sienna.disabled:hover, .btn.btn-sienna.disabled:focus, .btn.btn-sienna.disabled.focus, .btn.btn-sienna.disabled:active, .btn.btn-sienna.disabled.active, .btn.btn-sienna:disabled, .btn.btn-sienna:disabled:hover, .btn.btn-sienna:disabled:focus, .btn.btn-sienna:disabled.focus, .btn.btn-sienna:disabled:active, .btn.btn-sienna:disabled.active, .btn.btn-sienna[disabled], .btn.btn-sienna[disabled]:hover, .btn.btn-sienna[disabled]:focus, .btn.btn-sienna[disabled].focus, .btn.btn-sienna[disabled]:active, .btn.btn-sienna[disabled].active, fieldset[disabled] .btn.btn-sienna, fieldset[disabled] .btn.btn-sienna:hover, fieldset[disabled] .btn.btn-sienna:focus, fieldset[disabled] .btn.btn-sienna.focus, fieldset[disabled] .btn.btn-sienna:active, fieldset[disabled] .btn.btn-sienna.active,
+.navbar .navbar-nav > li > a.btn.btn-sienna.disabled,
+.navbar .navbar-nav > li > a.btn.btn-sienna.disabled:hover,
+.navbar .navbar-nav > li > a.btn.btn-sienna.disabled:focus,
+.navbar .navbar-nav > li > a.btn.btn-sienna.disabled.focus,
+.navbar .navbar-nav > li > a.btn.btn-sienna.disabled:active,
+.navbar .navbar-nav > li > a.btn.btn-sienna.disabled.active,
+.navbar .navbar-nav > li > a.btn.btn-sienna:disabled,
+.navbar .navbar-nav > li > a.btn.btn-sienna:disabled:hover,
+.navbar .navbar-nav > li > a.btn.btn-sienna:disabled:focus,
+.navbar .navbar-nav > li > a.btn.btn-sienna:disabled.focus,
+.navbar .navbar-nav > li > a.btn.btn-sienna:disabled:active,
+.navbar .navbar-nav > li > a.btn.btn-sienna:disabled.active,
+.navbar .navbar-nav > li > a.btn.btn-sienna[disabled],
+.navbar .navbar-nav > li > a.btn.btn-sienna[disabled]:hover,
+.navbar .navbar-nav > li > a.btn.btn-sienna[disabled]:focus,
+.navbar .navbar-nav > li > a.btn.btn-sienna[disabled].focus,
+.navbar .navbar-nav > li > a.btn.btn-sienna[disabled]:active,
+.navbar .navbar-nav > li > a.btn.btn-sienna[disabled].active, fieldset[disabled]
+.navbar .navbar-nav > li > a.btn.btn-sienna, fieldset[disabled]
+.navbar .navbar-nav > li > a.btn.btn-sienna:hover, fieldset[disabled]
+.navbar .navbar-nav > li > a.btn.btn-sienna:focus, fieldset[disabled]
+.navbar .navbar-nav > li > a.btn.btn-sienna.focus, fieldset[disabled]
+.navbar .navbar-nav > li > a.btn.btn-sienna:active, fieldset[disabled]
+.navbar .navbar-nav > li > a.btn.btn-sienna.active {
+  box-shadow: none;
+}
+.btn.btn-sienna.btn-simple,
+.navbar .navbar-nav > li > a.btn.btn-sienna.btn-simple {
+  background-color: transparent;
+  color: #752936;
+  box-shadow: none;
+}
+.btn.btn-sienna.btn-simple:hover, .btn.btn-sienna.btn-simple:focus, .btn.btn-sienna.btn-simple:active,
+.navbar .navbar-nav > li > a.btn.btn-sienna.btn-simple:hover,
+.navbar .navbar-nav > li > a.btn.btn-sienna.btn-simple:focus,
+.navbar .navbar-nav > li > a.btn.btn-sienna.btn-simple:active {
+  background-color: transparent;
+  color: #752936;
+}
+
+.text-primary {
+  color: #752936;
+}
+
+.form-control,
+.form-group .form-control {
+  border: 0;
+  background-image: linear-gradient(#752936, #752936), linear-gradient(#D2D2D2, #D2D2D2);
+  background-size: 0 2px, 100% 1px;
+  background-repeat: no-repeat;
+  background-position: center bottom, center calc(100% - 1px);
+  background-color: transparent;
+  transition: background 0s ease-out;
+  float: none;
+  box-shadow: none;
+  border-radius: 0;
+  font-weight: 400;
+}
+.form-group.is-focused .form-control {
+  outline: none;
+  background-image: linear-gradient(#752936, #752936), linear-gradient(#D2D2D2, #D2D2D2);
+  background-size: 100% 2px, 100% 1px;
+  box-shadow: none;
+  transition-duration: 0.3s;
+}
+.form-group.is-focused .form-control .material-input:after {
+  background-color: #9c27b0;
+}
+
+.card.card-login .card-header {
+  background-color: #752936;
+}
+
+.full-page:before {
+  background-color: rgba(0, 0, 0, 0);
+}
+
+/* OrgChart */
+.orgchart {
+  margin-top: 80px;
+}
+
+#chart-container {
+  background-color: #aaa;
+  position: relative;
+  display: inline-block;
+  top: 80px;
+  left: 10px;
+  height: 100%;
+  width: calc(100% - 24px);
+  border: 2px dashed #aaa;
+  border-radius: 5px;
+  overflow: auto;
+  text-align: center;
+}
+
+.absolute-right {
+  position: absolute;
+  top: 100px;
+  right: 10px;
+  z-index: 1000;
+}
+
+.absolute-left {
+  position: absolute;
+  top: 100px;
+  left: 10px;
+  z-index: 1000;
+}
+
+.dropdown-menu li a:hover,
+.dropdown-menu li a:focus,
+.dropdown-menu li a:active {
+  color: #FFFFFF !important;
+}
+
+.datepicker {
+  background-color: #FFFFFF !important;
+}
+
+.label-primary {
+  background-color: #78132F !important;
+}
+
+.label-secondary {
+  background-color: #8A4753 !important;
+}

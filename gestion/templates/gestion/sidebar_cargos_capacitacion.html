@@ -1,0 +1,420 @@
+{% load static %}
+
+<div class="sidebar" data-active-color="rose" data-background-color="white">
+    <div class="sidebar-wrapper">
+      <div class="panel panel-default" id="resetearFiltros">
+        <div class="panel-heading" >
+          <a>
+              <h4 class="panel-title padding-left">Quitar filtros
+              <i class="material-icons">delete</i>
+              </h4>
+          </a>
+        </div>
+      </div>
+            <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                    <div class="panel panel-default">
+                      <div class="panel-heading" role="tab" id="headingOne">
+                          <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="false" aria-controls="collapseOne" class="collapsed">
+                              <h4 class="panel-title padding-left">Selección de columnas
+                              <i class="material-icons">keyboard_arrow_down</i>
+                              </h4>
+                          </a>
+                      </div>
+                      <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne" aria-expanded="false" style="height: 0px;">
+                        <div class="panel-body">
+                            <div class="columnsToogle padding-left">
+                                <input type="checkbox" class="toggle-vis" data-column="0" checked> Nombre<br>
+                                <input type="checkbox" class="toggle-vis" data-column="1" checked> Apellidos<br>
+                                <input type="checkbox" class="toggle-vis" data-column="2" checked> Rango<br>
+                                <input type="checkbox" class="toggle-vis" data-column="3" checked> Departamento<br>
+                                <input type="checkbox" class="toggle-vis" data-column="4" checked> Nivel<br>
+                                <input type="checkbox" class="toggle-vis" data-column="5" checked> A cargo de<br>
+                                <input type="checkbox" class="toggle-vis" data-column="6" checked> Fecha inicio cargo<br>
+                                <input type="checkbox" class="toggle-vis" data-column="7" checked> Fecha fin cargo<br>
+                                <input type="checkbox" class="toggle-vis" data-column="9" checked> Fecha de nacimiento<br>
+                                <input type="checkbox" class="toggle-vis" data-column="10" checked> Grupo capacitación<br>
+                                <input type="checkbox" class="toggle-vis" data-column="11"> Estudio<br>
+                                <input type="checkbox" class="toggle-vis" data-column="12"> Fecha estudio<br>
+                                <input type="checkbox" class="toggle-vis" data-column="13"> Omamori Gohonzon<br>
+                                <input type="checkbox" class="toggle-vis" data-column="14"> Fecha Omamori Gohonzon<br>
+                                <input type="checkbox" class="toggle-vis" data-column="15"> Código postal<br>
+                                <input type="checkbox" class="toggle-vis" data-column="16"> Región<br>
+                                <input type="checkbox" class="toggle-vis" data-column="17"> Zona<br>
+                                <input type="checkbox" class="toggle-vis" data-column="18"> Distrito General<br>
+                                <input type="checkbox" class="toggle-vis" data-column="19"> Distrito<br>
+                                <input type="checkbox" class="toggle-vis" data-column="20"> Grupo<br>
+                                <input type="checkbox" class="toggle-vis" data-column="26"> Localidad<br>
+                                <input type="checkbox" class="toggle-vis" data-column="27"> Móvil<br>
+                                <input type="checkbox" class="toggle-vis" data-column="28"> Correo electrónico<br>
+                            </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="panel panel-default">
+                      <div class="panel-heading" role="tab" id="headingEleven">
+                        <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseEleven" aria-expanded="false" aria-controls="collapseEleven">
+                          <h4 class="panel-title padding-left">
+                            Rango
+                            <i class="material-icons">keyboard_arrow_down</i>
+                          </h4>
+                        </a>
+                      </div>
+                      <div id="collapseEleven" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingEleven" aria-expanded="false">
+                        <div class="panel-body padding-left">
+                          <div>
+                            <span class="dropdown">
+                              <button href="#" id="rangosList" class="dropdown-toggle btn btn-primary btn-round" data-toggle="dropdown" aria-expanded="false">Rango<b class="caret"></b></button>
+                              <ul class="dropdown-menu dropdown-menu-left">
+                                <li class="dropdown-header">Seleccione rango</li>
+                                {% for rango in rangos %}
+                                <li><a class="rangos-selector" href="#">{{ rango }}</a></li>
+                                {% endfor %}
+                              </ul>
+                              <button id="resetRangosBtn" class="btn btn-primary btn-round btn-fab btn-fab-mini" style="vertical-align: middle; display: none;">
+                                <i class="material-icons">close</i>
+                              <div class="ripple-container"></div></button>
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="panel panel-default">
+                      <div class="panel-heading" role="tab" id="headingTen">
+                        <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTen" aria-expanded="false" aria-controls="collapseTen">
+                          <h4 class="panel-title padding-left">
+                            Grupo capacitación
+                            <i class="material-icons">keyboard_arrow_down</i>
+                          </h4>
+                        </a>
+                      </div>
+                      <div id="collapseTen" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTen" aria-expanded="false">
+                        <div class="panel-body padding-left">
+                          <div>
+                            <span class="dropdown">
+                              <button href="#" id="grupoList" class="dropdown-toggle btn btn-primary btn-round" data-toggle="dropdown" aria-expanded="false">Grupo capacitación<b class="caret"></b></button>
+                              <ul class="dropdown-menu dropdown-menu-left">
+                                <li class="dropdown-header">Seleccione grupo</li>
+                                {% for grupo in grupos_capacitacion %}
+                                <li><a class="grupo-selector" href="#">{{ grupo }}</a></li>
+                                {% endfor %}
+                              </ul>
+                              <button id="resetGrupoBtn" class="btn btn-primary btn-round btn-fab btn-fab-mini" style="vertical-align: middle; display: none;">
+                                <i class="material-icons">close</i>
+                              <div class="ripple-container"></div></button>
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="panel panel-default">
+                      <div class="panel-heading" role="tab" id="headingTwo">
+                        <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                          <h4 class="panel-title padding-left">
+                            Filtros estructura
+                            <i class="material-icons">keyboard_arrow_down</i>
+                          </h4>
+                        </a>
+                      </div>
+                      <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo" aria-expanded="false">
+                        <div class="panel-body padding-left">
+                          <div>
+                            <span class="dropdown">
+                              <button href="#" id="regionesList" class="dropdown-toggle btn btn-primary btn-round" data-toggle="dropdown" aria-expanded="false">Regiones <b class="caret"></b></button>
+                              <ul class="dropdown-menu dropdown-menu-left">
+                                <li class="dropdown-header">Seleccione región</li>
+                                {% for region in regiones %}
+                                <li><a href="#"><option value="{{ region.pk }}" class="regiones-selector">{{ region.nombre }}</option></a></li>
+                                {% endfor %}
+                              </ul>
+                              <button id="resetRegionesBtn" class="btn btn-primary btn-round btn-fab btn-fab-mini" style="vertical-align: middle; display: none;">
+                                <i class="material-icons">close</i>
+                              <div class="ripple-container"></div></button>
+                            </span>
+                          </div>
+                          <div>
+                            <span class="dropdown">
+                              <button href="#" id="zonasBtn" class="dropdown-toggle btn btn-primary btn-round" data-toggle="dropdown" aria-expanded="false" style="display: none;">Zonas <b class="caret"></b></button>
+                              <ul id="zonasList" class="dropdown-menu dropdown-menu-left">
+                                <li class="dropdown-header">Seleccione zona</li>
+                              </ul>
+                              <button id="resetzonasBtn" class="btn btn-primary btn-round btn-fab btn-fab-mini" style="vertical-align: middle; display: none;">
+                                <i class="material-icons">close</i>
+                              <div class="ripple-container"></div></button>
+                            </span>
+                          </div>
+                          <div>
+                            <span class="dropdown">
+                              <button href="#" id="DGBtn" class="dropdown-toggle btn btn-primary btn-round" data-toggle="dropdown" aria-expanded="false" style="display: none;">DG <b class="caret"></b></button>
+                              <ul id="DGList" class="dropdown-menu dropdown-menu-left">
+                                <li class="dropdown-header">Seleccione DG</li>
+                              </ul>
+                              <button id="resetDGBtn" class="btn btn-primary btn-round btn-fab btn-fab-mini" style="vertical-align: middle; display: none;">
+                                <i class="material-icons">close</i>
+                              <div class="ripple-container"></div></button>
+                            </span>
+                          </div>
+                          <div>
+                            <span class="dropdown">
+                              <button href="#" id="distritosBtn" class="dropdown-toggle btn btn-primary btn-round" data-toggle="dropdown" aria-expanded="false" style="display: none;">Distrito <b class="caret"></b></button>
+                              <ul id="distritosList" class="dropdown-menu dropdown-menu-left">
+                                <li class="dropdown-header">Seleccione distrito</li>
+                              </ul>
+                              <button id="resetdistritosBtn" class="btn btn-primary btn-round btn-fab btn-fab-mini" style="vertical-align: middle; display: none;">
+                                <i class="material-icons">close</i>
+                              <div class="ripple-container"></div></button>
+                            </span>
+                          </div>
+                          <div>
+                            <span class="dropdown">
+                              <button href="#" id="gruposBtn" class="dropdown-toggle btn btn-primary btn-round" data-toggle="dropdown" aria-expanded="false" style="display: none;">Grupo <b class="caret"></b></button>
+                              <ul id="gruposList" class="dropdown-menu dropdown-menu-left">
+                                <li class="dropdown-header">Seleccione grupo</li>
+                              </ul>
+                              <button id="resetgruposBtn" class="btn btn-primary btn-round btn-fab btn-fab-mini" style="vertical-align: middle; display: none;">
+                                <i class="material-icons">close</i>
+                              <div class="ripple-container"></div></button>
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="panel panel-default">
+                      <div class="panel-heading" role="tab" id="headingThree">
+                        <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                          <h4 class="panel-title padding-left">
+                            Fecha inicio cargo
+                            <i class="material-icons">keyboard_arrow_down</i>
+                          </h4>
+                        </a>
+                      </div>
+                      <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree" aria-expanded="false">
+                        <div class="panel-body padding-left">
+                          <div class="form-group no-margin-top">
+                            <label style="color: inherit;" class="label-control">Desde</label>
+                            <input type="text" id="fini" name="fini" class="form-control datepicker" value="">
+                            <span class="material-input"></span>
+                          </div>
+                          <div class="form-group no-margin-top">
+                            <label style="color: inherit;" class="label-control">Hasta</label>
+                            <input type="text" id="ffin" name="ffin" class="form-control datepicker" value="">
+                            <span class="material-input"></span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="panel panel-default">
+                      <div class="panel-heading" role="tab" id="headingFour">
+                        <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                          <h4 class="panel-title padding-left">
+                            Fecha fin cargo
+                            <i class="material-icons">keyboard_arrow_down</i>
+                          </h4>
+                        </a>
+                      </div>
+                      <div id="collapseFour" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingFour" aria-expanded="false">
+                        <div class="panel-body padding-left">
+                          <div class="form-group no-margin-top">
+                            <label style="color: inherit;" class="label-control">Desde</label>
+                            <input type="text" id="fbaini" name="fbaini" class="form-control datepicker" value="">
+                            <span class="material-input"></span>
+                          </div>
+                          <div class="form-group no-margin-top">
+                            <label style="color: inherit;" class="label-control">Hasta</label>
+                            <input type="text" id="fbafin" name="fbafin" class="form-control datepicker" value="">
+                            <span class="material-input"></span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="panel panel-default">
+                      <div class="panel-heading" role="tab" id="headingSix">
+                        <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseSix" aria-expanded="false" aria-controls="collapseSix">
+                          <h4 class="panel-title padding-left">
+                            Estudio
+                            <i class="material-icons">keyboard_arrow_down</i>
+                          </h4>
+                        </a>
+                      </div>
+                      <div id="collapseSix" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingSix" aria-expanded="false">
+                        <div class="panel-body padding-left">
+                          <div>
+                            <span class="dropdown">
+                              <button href="#" id="estudiosList" class="dropdown-toggle btn btn-primary btn-round" data-toggle="dropdown" aria-expanded="false">Estudios <b class="caret"></b></button>
+                              <ul class="dropdown-menu dropdown-menu-left">
+                                <li class="dropdown-header">Seleccione estudio</li>
+                                <li><a class="estudios-selector" href="#">Sin estudio</a></li>
+                                {% for estudio in estudios %}
+                                <li><a class="estudios-selector" href="#">{{ estudio }}</a></li>
+                                {% endfor %}
+                              </ul>
+                              <button id="resetEstudiosBtn" class="btn btn-primary btn-round btn-fab btn-fab-mini" style="vertical-align: middle; display: none;">
+                                <i class="material-icons">close</i>
+                              <div class="ripple-container"></div></button>
+                            </span>
+                          </div>
+                          <div class="form-group no-margin-top">
+                            <label style="color: inherit;" class="label-control">Desde</label>
+                            <input type="text" id="fesini" name="fesini" class="form-control datepicker" value="">
+                            <span class="material-input"></span>
+                          </div>
+                          <div class="form-group no-margin-top">
+                            <label style="color: inherit;" class="label-control">Hasta</label>
+                            <input type="text" id="fesfin" name="fesfin" class="form-control datepicker" value="">
+                            <span class="material-input"></span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="panel panel-default">
+                      <div class="panel-heading" role="tab" id="headingSeven">
+                        <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseSeven" aria-expanded="false" aria-controls="collapseSeven">
+                          <h4 class="panel-title padding-left">
+                            Departamento
+                            <i class="material-icons">keyboard_arrow_down</i>
+                          </h4>
+                        </a>
+                      </div>
+                      <div id="collapseSeven" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingSeven" aria-expanded="false">
+                        <div class="panel-body padding-left">
+                          <div>
+                            <span class="dropdown">
+                              <button href="#" id="departamentosList" class="dropdown-toggle btn btn-primary btn-round" data-toggle="dropdown" aria-expanded="false">Departamento<b class="caret"></b></button>
+                              <ul class="dropdown-menu dropdown-menu-left">
+                                <li class="dropdown-header">Seleccione departamento</li>
+                                {% for departamento in departamentos %}
+                                <li><a class="departamentos-selector" href="#">{{ departamento }}</a></li>
+                                {% endfor %}
+                              </ul>
+                              <button id="resetDepartamentosBtn" class="btn btn-primary btn-round btn-fab btn-fab-mini" style="vertical-align: middle; display: none;">
+                                <i class="material-icons">close</i>
+                              <div class="ripple-container"></div></button>
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="panel panel-default">
+                      <div class="panel-heading" role="tab" id="headingEight">
+                        <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseEight" aria-expanded="false" aria-controls="collapseEight">
+                          <h4 class="panel-title padding-left">
+                            Nivel
+                            <i class="material-icons">keyboard_arrow_down</i>
+                          </h4>
+                        </a>
+                      </div>
+                      <div id="collapseEight" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingEight" aria-expanded="false">
+                        <div class="panel-body padding-left">
+                          <div>
+                            <span class="dropdown">
+                              <button href="#" id="nivelList" class="dropdown-toggle btn btn-primary btn-round" data-toggle="dropdown" aria-expanded="false">Nivel<b class="caret"></b></button>
+                              <ul class="dropdown-menu dropdown-menu-left">
+                                <li class="dropdown-header">Seleccione nivel</li>
+                                {% for nivel in niveles %}
+                                <li><a class="nivel-selector" href="#">{{ nivel }}</a></li>
+                                {% endfor %}
+                              </ul>
+                              <button id="resetNivelBtn" class="btn btn-primary btn-round btn-fab btn-fab-mini" style="vertical-align: middle; display: none;">
+                                <i class="material-icons">close</i>
+                              <div class="ripple-container"></div></button>
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="panel panel-default">
+                      <div class="panel-heading" role="tab" id="headingFive">
+                        <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseFive" aria-expanded="false" aria-controls="collapseFive">
+                          <h4 class="panel-title padding-left">
+                            Fecha nacimiento
+                            <i class="material-icons">keyboard_arrow_down</i>
+                          </h4>
+                        </a>
+                      </div>
+                      <div id="collapseFive" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingFive" aria-expanded="false">
+                        <div class="panel-body padding-left">
+                          <div class="form-group no-margin-top">
+                            <label style="color: inherit;" class="label-control">Desde</label>
+                            <input type="text" id="fnacini" name="fnacini" class="form-control datepicker" value="">
+                            <span class="material-input"></span>
+                          </div>
+                          <div class="form-group no-margin-top">
+                            <label style="color: inherit;" class="label-control">Hasta</label>
+                            <input type="text" id="fnacfin" name="fnacfin" class="form-control datepicker" value="">
+                            <span class="material-input"></span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="panel panel-default">
+                      <div class="panel-heading" role="tab" id="headingNine">
+                        <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseNine" aria-expanded="false" aria-controls="collapseNine">
+                          <h4 class="panel-title padding-left">
+                            Omamori Gohonzon
+                            <i class="material-icons">keyboard_arrow_down</i>
+                          </h4>
+                        </a>
+                      </div>
+                      <div id="collapseNine" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingNine" aria-expanded="false">
+                        <div class="panel-body padding-left">
+                          <div>
+                            <span class="dropdown">
+                              <button href="#" id="omamoriList" class="dropdown-toggle btn btn-primary btn-round" data-toggle="dropdown" aria-expanded="false">Omamori Gohonzon <b class="caret"></b></button>
+                              <ul class="dropdown-menu dropdown-menu-left">
+                                <li class="dropdown-header">Omamori</li>
+                                <li><a class="omamori-selector" href="#">Sí</a></li>
+                                <li><a class="omamori-selector" href="#">No</a></li>
+                              </ul>
+                              <button id="resetOmamoriBtn" class="btn btn-primary btn-round btn-fab btn-fab-mini" style="vertical-align: middle; display: none;">
+                                <i class="material-icons">close</i>
+                              <div class="ripple-container"></div></button>
+                            </span>
+                          </div>
+                          <div class="form-group no-margin-top">
+                            <label style="color: inherit;" class="label-control">Desde</label>
+                            <input type="text" id="fomini" name="fomini" class="form-control datepicker" value="">
+                            <span class="material-input"></span>
+                          </div>
+                          <div class="form-group no-margin-top">
+                            <label style="color: inherit;" class="label-control">Hasta</label>
+                            <input type="text" id="fomfin" name="fomfin" class="form-control datepicker" value="">
+                            <span class="material-input"></span>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="panel panel-default">
+                        <div class="panel-heading" role="tab" id="headingTen">
+                          <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwelve" aria-expanded="false" aria-controls="collapseTwelve">
+                            <h4 class="panel-title padding-left">
+                              Código postal
+                              <i class="material-icons">keyboard_arrow_down</i>
+                            </h4>
+                          </a>
+                        </div>
+                        <div id="collapseTwelve" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTen" aria-expanded="false">
+                          <div class="panel-body padding-left">
+                            <div class="form-group no-margin-top">
+                              <label style="color: inherit;" class="label-control">Desde</label>
+                              <input type="text" id="cpini" name="cpini" class="form-control white-background">
+                              <span class="material-input"></span>
+                            </div>
+                            <div class="form-group no-margin-top">
+                              <label style="color: inherit;" class="label-control">Hasta</label>
+                              <input type="text" id="cpfin" name="cpfin" class="form-control white-background">
+                              <span class="material-input"></span>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="panel panel-default hidden">
+                          <div class="panel-heading" role="tab" id="headingSeventeen">
+                              <a role="button" href="datos_suscripcion" id="data_subcriptions">
+                                  <h4 class="panel-title padding-left">Datos de Suscriptores CG
+                                  </h4>
+                              </a>
+                          </div>
+                          </div> 
+                      </div>
+                    </div>
+                  </div>
+            
+    </div>
+</div>

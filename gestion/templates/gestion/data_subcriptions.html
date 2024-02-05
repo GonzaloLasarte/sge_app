@@ -1,0 +1,410 @@
+{% extends "gestion/base.html" %}
+{% load i18n static %}
+
+{% block content %}
+<div class="wrapper">
+    {% include "gestion/sidebar_subcriptions.html" %}
+    <div class="main-panel">
+      <div class="content">
+        <div class="container-fluid">
+          <div class="navbar-minimize">
+            <button id="minimizeSidebar" class="btn btn-round btn-white btn-fill btn-just-icon">
+              <i class="material-icons visible-on-sidebar-regular">more_vert</i>
+              <i class="material-icons visible-on-sidebar-mini">view_list</i>
+              <div class="ripple-container"></div>
+            </button>
+            <div class="pull-right">
+              <span
+                ><a href="/" class="card-title text-primary"> <b> Volver</b></a> -
+              </span>
+              <span
+                ><a href="/datos_suscripcion" class="card-title text-primary"> <b>Suscriptores Miembros</b></a> -
+              </span> 
+              {% if request.user.is_admin or request.user.is_consultor %}
+              <span><a href="/datos_suscripcion_cargo" class="card-title text-primary">Suscriptores Cargos de responsabilidad</a> - </span>
+              <span><a href="/datos_suscripcion_capacitacion" class="card-title text-primary">Suscriptores Cargos de capacitación</a></span>
+              {% endif %}
+            </div>
+            <div>
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="card">
+                    <div class="panel-body">
+                      <h6>Para ver datos usar filtros del panel</h6>
+                      <h7 id="total-suscriptors">Suscriptores Totales: <strong>{{total_suscriptors}}</strong></h7>
+                    </div>
+                    <div class="card-content">
+                      <h4 class="card-title text-primary">
+                        <strong>Datos Suscriptores</strong>
+                      </h4>
+                      <h6 id='amount'></h6>
+                    <!-- end content-->
+                  </div>
+                  <!--  end card  -->
+                </div>
+                <!-- end col-md-12 -->
+              </div>
+              <!-- end row -->
+            </div>
+          </div>
+        </div>
+      </div>
+{% endblock %}
+{% block scripts %}
+    <script>
+      const data_woocomence = {{ list_client|safe }};
+      const datamembers = {{ members|safe }};
+      let dataFilterMembers = [];
+      let dataFilterRegion = [];
+      let dataFilterDepart = [];
+      let dataSaved = [];
+      let cont = 0
+     
+      const title = document.getElementById('amount');
+
+
+      $("#resetearFiltros").on("click", function () {
+        $("#resetRegionesBtn").trigger("click");
+        $("#resetDepartamentosBtn").trigger("click");
+        $("#resetEstudiosBtn").trigger("click");
+        $("#regionesList").trigger("click");
+        $('#regionesList ').attr("aria-expanded", "false");
+        title.innerHTML = "";
+        dataFilterMembers = [];
+        dataFilterRegion = [];
+        dataFilterDepart = [];
+        dataSaved = [];
+      })
+      
+        function resetElemento(text, column_number) {
+          var htmlContent = '<li class="dropdown-header">Sin ' + text + "</li>";
+          $("#" + text + "List").html(htmlContent);
+          $("#" + text + "Btn").html(text + ' <b class="caret"></b><div class="ripple-container"></div>');
+          $("#reset" + text + "Btn").hide();
+          title.innerHTML = ""
+         
+        }
+
+        function filterDataRegion(text){
+          cont++;
+          let dataFilter= []
+          if(dataFilterDepart.length === 0){
+               dataFilter = datamembers.filter((item) => { 
+                if(item.region === text){
+                    return item;
+                }
+            });
+            const filterTotal = dataFilter.filter((item) => data_woocomence.some((item2) => item2.email === item.email));
+           if(filterTotal.length !== 0){
+              dataFilterRegion = filterTotal;
+              dataSaved = filterTotal;
+           }
+            title.innerHTML = "Cantidad de suscriptores: " + " " +  " <strong>" + filterTotal.length + "</strong>";
+          }else{
+             dataFilter = dataFilterDepart.filter((item) => { 
+              if(item.region === text){
+                  return item;
+              }
+          });
+          const filterTotal = dataFilter.filter((item) => data_woocomence.some((item2) => item2.email === item.email));
+          if(filterTotal.length !== 0){
+            dataFilterRegion = filterTotal;
+            dataSaved = filterTotal;
+          }
+          title.innerHTML = "Cantidad de suscriptores: " + " " +  " <strong>" + filterTotal.length + "</strong>";
+          }
+        }
+        function filterDataDepart(text){
+          cont++;
+          let dataFilter= []
+          if(dataFilterRegion.length === 0 ){
+               dataFilter = datamembers.filter((item) => { 
+                if(item.departamento === text){
+                    return item;
+                }
+            });
+            const filterTotal = dataFilter.filter((item) => data_woocomence.some((item2) => item2.email === item.email));
+            dataFilterDepart = filterTotal;
+            title.innerHTML = "Cantidad de suscriptores: " + " " +  " <strong>" + filterTotal.length + "</strong>";
+          }else{
+            if(dataSaved.length !== 0){
+              dataFilter = dataSaved.filter((item) => { 
+                if(item.departamento === text){
+                    return item;
+                }
+            });
+
+          const filterTotal = dataFilter.filter((item) => data_woocomence.some((item2) => item2.email === item.email));
+          if(filterTotal.length !== 0){
+            dataFilterDepart = filterTotal;
+          }
+          title.innerHTML = "Cantidad de suscriptores: " + " " +  " <strong>" + filterTotal.length + "</strong>";
+          }
+        }
+      }
+      function filterDataZona(text, region){
+        if(dataFilterRegion.length === 0){
+          const dataFilter = datamembers.filter((item) => { 
+            if(item.zona === text && item.region === region){
+                return item;
+            }
+        });
+      }else{
+        dataFilter = dataFilterRegion.filter((item) => { 
+          if(item.zona === text && item.region === region){
+              return item;
+          }
+      });
+      const filterTotal = dataFilter.filter((item) => data_woocomence.some((item2) => item2.email === item.email));
+      dataSaved = filterTotal;
+      title.innerHTML = "Cantidad de suscriptores: " + " " +  " <strong>" + filterTotal.length + "</strong>";
+      }
+
+      }
+      function filterDataDG(text, zona){
+        const dataFilter = dataFilterRegion.filter((item) => { 
+            if(item.distrito_general === text && item.zona === zona){
+                return item;
+            }
+        });
+        const filterTotal = dataFilter.filter((item) => data_woocomence.some((item2) => item2.email === item.email));
+        dataSaved = filterTotal;
+        title.innerHTML = "Cantidad de suscriptores: " + " " +  " <strong>" + filterTotal.length + "</strong>";
+      }
+      function filterDataDistrito(text, zona){
+        const dataFilter = dataFilterRegion.filter((item) => { 
+            if(item.distrito === text && item.zona === zona){
+                return item;
+            }
+        });
+        const filterTotal = dataFilter.filter((item) => data_woocomence.some((item2) => item2.email === item.email));
+        dataSaved = filterTotal;
+        title.innerHTML = "Cantidad de suscriptores: " + " " +  " <strong>" + filterTotal.length + "</strong>";
+      }
+      function filterDataGrupo(text, zona){
+        const dataFilter = dataFilterRegion.filter((item) => { 
+            if(item.grupo === text && item.zona === zona){
+                return item;
+            }
+        });
+        const filterTotal = dataFilter.filter((item) => data_woocomence.some((item2) => item2.email === item.email));
+        dataSaved = filterTotal;
+        title.innerHTML = "Cantidad de suscriptores: "  + " " +  " <strong>" + filterTotal.length + "</strong>";
+      }
+
+        function elegir_zona(text) {
+          resetElemento("zonas");
+          resetElemento("DG");
+          resetElemento("distritos");
+          resetElemento("grupos");
+          $("#DGBtn").hide();
+          $("#distritosBtn").hide();
+          $("#gruposBtn").hide();
+          $("#resetRegionesBtn").show();
+          $("#resetZonasBtn").hide();
+          filterDataRegion(text);
+          $("#regionesList").html(text + '<b class="caret"></b><div class="ripple-container"></div>');
+          rellenarZonas(text);
+        }
+        // regiones
+        $(".regiones-selector").on("click", function () {
+          elegir_zona(this.text);
+        });
+
+        $("#resetRegionesBtn").on("click", function () {
+          resetElemento("zonas");
+          resetElemento("DG");
+          resetElemento("distritos");
+          resetElemento("grupos");
+
+          $("#regionesList").html("REGIONES " + '<b class="caret"></b><div class="ripple-container"></div>');
+          $("#resetRegionesBtn").hide();
+          title.innerHTML = "";
+          dataFilterRegion = [];
+          $("#zonasBtn").hide();
+          $("#DGBtn").hide();
+          $("#distritosBtn").hide();
+          $("#gruposBtn").hide();
+        });
+
+        // zonas
+        function rellenarZonas(region) {
+          $("#zonasBtn").show();
+          var zonas = [...new Set(datamembers.map(objeto => objeto.region === region ? objeto.zona : null))].filter((item) => item !== null).sort();
+          var htmlContent = '<li class="dropdown-header">Seleccione zona</li>';
+          $("#zonasList").html(htmlContent);
+          var i;
+          for (i = 0; i < zonas.length; i++) {
+            element = $('<li><a class="zonas-selector" href="#">' + zonas[i] + "</a></li>");
+            element.click(() => handlerZona(region, event));
+            $("#zonasList").append(element);
+          }
+          $("#resetzonasBtn").hide();
+        }
+
+        function handlerZona(region, event) {
+          
+          resetElemento("DG");
+          resetElemento("distritos");
+          resetElemento("grupos");
+          $("#distritosBtn").hide();
+          $("#gruposBtn").hide();
+
+          $("#resetzonasBtn").show();
+          var val = event.target.textContent;
+          $("#zonasBtn").html(val + '<b class="caret"></b><div class="ripple-container"></div>');
+          filterDataZona(val, region);
+          rellenarDG(val);
+
+          $("#resetDGBtn").hide();
+          $("#resetdistritosBtn").hide();
+          $("#resetgruposBtn").hide();
+        }
+
+        $("#resetzonasBtn").on("click", function () {
+          resetElemento("DG");
+          resetElemento("distritos");
+          resetElemento("grupos");
+          $("#zonasBtn").html("ZONAS " + '<b class="caret"></b><div class="ripple-container"></div>');
+          resetElemento("");
+          $("#resetzonasBtn").hide();
+          $("#DGBtn").hide();
+          $("#distritosBtn").hide();
+          $("#gruposBtn").hide();
+        });
+
+        // DG
+        function rellenarDG(zona) {
+          $("#DGBtn").show();
+          var DGs = [...new Set(datamembers.map(objeto => objeto.zona === zona ? objeto.distrito_general: null))].filter((item) => item !== null).sort();
+          var htmlContent = '<li class="dropdown-header">Seleccione DG</li>';
+          $("#DGList").html(htmlContent);
+          var i;
+          for (i = 0; i < DGs.length; i++) {
+            element = $('<li><a class="DG-selector" href="#">' + DGs[i] + "</a></li>");
+            element.click(()=>handlerDG(zona, event));
+            $("#DGList").append(element);
+          }
+          $("#resetDGBtn").hide();
+        }
+
+        function handlerDG(zona, event) {
+          resetElemento("distritos");
+          resetElemento("grupos");
+          $("#gruposBtn").hide();
+
+          $("#resetDGBtn").show();
+          var val = event.target.textContent;
+          $("#DGBtn").html(val + '<b class="caret"></b><div class="ripple-container"></div>');
+          filterDataDG(val, zona);
+          rellenarDistrito(zona, val);
+
+          $("#resetdistritosBtn").hide();
+          $("#resetgruposBtn").hide();
+        }
+
+        $("#resetDGBtn").on("click", function () {
+          resetElemento("distritos");
+          resetElemento("grupos");
+          $("#DGBtn").html("DG " + '<b class="caret"></b><div class="ripple-container"></div>');
+          title.innerHTML = "";
+          dataFilterMembers = [];
+          $("#resetDGBtn").hide();
+          $("#distritosBtn").hide();
+          $("#gruposBtn").hide();
+        });
+
+        // Distrito
+        function rellenarDistrito(zona, val) {
+          $("#distritosBtn").show();
+          var distritos = [...new Set(dataSaved.map(objeto => objeto.distrito_general === val ? objeto.distrito : null))].filter((item) => item !== null).sort();
+          var htmlContent = '<li class="dropdown-header">Seleccione distrito</li>';
+          $("#distritosList").html(htmlContent);
+          var i;
+          for (i = 0; i < distritos.length; i++) {
+            element = $('<li><a class="distrito-selector" href="#">' + distritos[i] + "</a></li>");
+            element.click(()=>handlerDistrito(zona, event));
+            $("#distritosList").append(element);
+          }
+          $("#resetdistritosBtn").hide();
+        }
+
+        function handlerDistrito(zona, event) {
+          resetElemento("grupos");
+
+          $("#resetdistritosBtn").show();
+          var val = event.target.textContent;
+          $("#distritosBtn").html(val + '<b class="caret"></b><div class="ripple-container"></div>');
+          filterDataDistrito(val, zona);
+          rellenarGrupo(zona, val);
+
+          $("#resetgruposBtn").hide();
+        }
+
+        $("#resetdistritosBtn").on("click", function () {
+          resetElemento("grupos");
+          $("#distritosBtn").html("distrito " + '<b class="caret"></b><div class="ripple-container"></div>');
+          title.innerHTML = "";
+          dataFilterMembers = [];
+          $("#resetdistritosBtn").hide();
+          $("#gruposBtn").hide();
+        });
+
+        // Grupo
+        function rellenarGrupo(zona, val) {
+          $("#gruposBtn").show();
+          var grupos = [...new Set(dataSaved.map(objeto => objeto.distrito === val ? objeto.grupo : null))].filter((item) => item !== null).sort();
+          var htmlContent = '<li class="dropdown-header">Seleccione grupo</li>';
+          $("#gruposList").html(htmlContent);
+          var i;
+          for (i = 0; i < grupos.length; i++) {
+            element = $('<li><a class="grupo-selector" href="#">' + grupos[i] + "</a></li>");
+            element.click(()=>handlerGrupo(zona, event));
+            $("#gruposList").append(element);
+          }
+          $("#resetgruposBtn").hide();
+        }
+
+        function handlerGrupo(zona, event) {
+          $("#resetgruposBtn").show();
+          var val = event.target.textContent;
+          $("#gruposBtn").html(val + '<b class="caret"></b><div class="ripple-container"></div>');
+          filterDataGrupo(val, zona);
+        }
+
+        $("#resetgruposBtn").on("click", function () {
+          $("#gruposBtn").html("grupo " + '<b class="caret"></b><div class="ripple-container"></div>');
+          title.innerHTML = "";
+          dataFilterMembers = [];
+          $("#resetgruposBtn").hide();
+        });
+
+        // Estudios
+        $(".estudios-selector").on("click", function () {
+          $("#resetEstudiosBtn").show();
+          filterData(this.text);
+          $("#estudiosList").html(this.text + '<b class="caret"></b><div class="ripple-container"></div>');
+        });
+
+        $("#resetEstudiosBtn").on("click", function () {
+          $("#estudiosList").html("ESTUDIOS " + '<b class="caret"></b><div class="ripple-container"></div>');
+          $("#resetEstudiosBtn").hide();
+          filterData("");
+        });
+
+        // Departamento
+        $(".departamentos-selector").on("click", function () {
+          $("#resetDepartamentosBtn").show();
+          filterDataDepart( this.text);
+          $("#departamentosList").html(this.text + '<b class="caret"></b><div class="ripple-container"></div>');
+        });
+
+        $("#resetDepartamentosBtn").on("click", function () {
+          $("#departamentosList").html("DEPARTAMENTOS " + '<b class="caret"></b><div class="ripple-container"></div>');
+          $("#resetDepartamentosBtn").hide();
+          title.innerHTML = "";
+          dataFilterDepart = [];
+        });
+        
+    </script>
+    {% endblock %}

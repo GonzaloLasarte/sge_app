@@ -1,0 +1,31 @@
+{% extends "admin/base.html" %}
+{% load i18n %}
+
+{% load staticfiles %}
+
+{% block title %}{{ title }} | {{ site_title|default:_('Soka Gakkai site admin') }}{% endblock %}
+
+{% block branding %}
+<h1 id="site-name"><a href="{% url 'admin:index' %}"><img src="{% static 'gestion/img/logo.png' %}" height="40px" />
+{% trans 'Soka Gakkai admin' %}</a></h1>
+{% endblock %}
+
+{% block nav-global %}{% endblock %}
+
+{% block userlinks %}
+{% if site_url %}
+    <a href="{{ site_url }}">Listado</a> /
+{% endif %}
+<a href="{% url 'gestion:panel' %}">Panel</a> /
+<a href="{% url 'gestion:organigrama' %}">Organigrama</a> /
+{% if user.is_active and user.is_staff %}
+    {% url 'django-admindocs-docroot' as docsroot %}
+    {% if docsroot %}
+        <a href="{{ docsroot }}">{% trans 'Documentation' %}</a> /
+    {% endif %}
+{% endif %}
+{% if user.has_usable_password %}
+<a href="{% url 'admin:password_change' %}">{% trans 'Change password' %}</a> /
+{% endif %}
+<a href="{% url 'admin:logout' %}">{% trans 'Log out' %}</a>
+{% endblock %}
