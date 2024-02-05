@@ -2,7 +2,6 @@
 
 import datetime
 from django.db import migrations, models
-from django.utils.timezone import utc
 
 
 class Migration(migrations.Migration):
@@ -15,6 +14,6 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='extendeduser',
             name='caducidad',
-            field=models.DateField(default=datetime.datetime(2019, 6, 27, 17, 50, 21, 657049, tzinfo=utc)),
+            field=models.DateField(default=datetime.datetime(2019, 6, 27, 17, 50, 21, 657049)),
         ),
     ]

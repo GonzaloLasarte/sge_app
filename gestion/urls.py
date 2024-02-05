@@ -2,7 +2,7 @@ from django.urls import path, include
 from django.contrib.auth import views as auth_views
 from . import views
 from django.views import generic
-from django.conf.urls import url
+from django.urls import re_path
 
 from gestion.admin import MemberAdmin
 
@@ -16,12 +16,12 @@ urlpatterns = [
     path('member/<pk>', views.MemberDetailView.as_view(), name='member-detail'),
     path(r'update-grupo/<int:pk>/', views.update_grupo, name="update_grupo"),
     path('organigrama', views.organigrama, name="organigrama"),
-    url(r'^exportar_organigrama/(?P<region>\w+)/$', views.exportar_organigrama, name="exportar_organigrama"),
-    url(r'^getEstructura/$', views.get_estructura),
-    url(r'^getCargosRegion/$', views.get_data),
-    url(r'^getRegiones/$', views.regiones),
-    url(r'^list/(?P<q>\w+)/$', views.list, name="list_filter"),
-    url(r'^getList', views.get_list),
+    re_path(r'^exportar_organigrama/(?P<region>\w+)/$', views.exportar_organigrama, name="exportar_organigrama"),
+    re_path(r'^getEstructura/$', views.get_estructura),
+    re_path(r'^getCargosRegion/$', views.get_data),
+    re_path(r'^getRegiones/$', views.regiones),
+    re_path(r'^list/(?P<q>\w+)/$', views.list, name="list_filter"),
+    re_path(r'^getList', views.get_list),
     path(r'reactivar/<int:pk>/', views.reactivar, name="reactivar"),
     path(r'deshacer_baja/<int:pk>/', views.deshacer_baja, name="deshacer_baja"),
     path(r'dar_baja_lopd/<int:pk>/', views.dar_baja_lopd, name="dar_baja_lopd"),
@@ -33,7 +33,7 @@ urlpatterns = [
     path(r'logout_view/(?P<expired_user>\w+)/', views.logout_view, name='logout_view'),
     path('<pk>/delete/', views.MemberDeleteView.as_view()),
     path(r'delete-member/<int:pk>/', views.delete_member),
-    url(r'^getMotivosBaja/$', views.get_motivos_baja),
+    re_path(r'^getMotivosBaja/$', views.get_motivos_baja),
     path(r'registration/update.html', views.change_password, name='cambia-pass'),
     path('datos_suscripcion', views.data_subcriptions, name='data-suscriptions'),
     path('datos_suscripcion_cargo', views.data_subcriptions_cargo, name='data-suscriptions_cargo'),

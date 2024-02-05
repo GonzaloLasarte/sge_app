@@ -1,9 +1,9 @@
 from . import views
-from django.conf.urls import url
+from django.urls import path
 
 
 app_name = 'cargos'
 urlpatterns = [
-    url(r'^get_object_id/', views.get_object_id),
-    url(r'^populate_object_id/', views.populate_object_id),
+    path(r'^get_object_id/', views.get_object_id),
+    path(r'^populate_object_id/', views.populate_object_id),
 ]
