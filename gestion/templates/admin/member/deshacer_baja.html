@@ -1,0 +1,33 @@
+{% extends "admin/base_site.html" %}
+
+{% load static %}
+
+{% block extrahead %}
+{{ block.super }}
+<script type="text/javascript" src="{% static 'gestion/js/jquery-3.1.1.min.js' %}"></script>
+{% endblock %}
+
+{% block content %}
+  {% if form.errors %}
+      {% for field in form %}
+          {% for error in field.errors %}
+              <div class="alert alert-danger">
+                  <strong>{{ error|escape }}</strong>
+              </div>
+          {% endfor %}
+      {% endfor %}
+      {% for error in form.non_field_errors %}
+          <div class="alert alert-danger">
+              <strong>{{ error|escape }}</strong>
+          </div>
+      {% endfor %}
+  {% endif %}
+  <form action="" method="post">
+    {% csrf_token %}
+
+    <p>Se va a deshacer la última baja de este miembro. ¿Está seguro?</p>
+
+    <input type="submit" id="btnAñadir" name="apply" value="Deshacer última baja">
+    <br><br><a href="{{ request.META.HTTP_REFERER }}">Cancelar y volver</a>
+  </form>
+{% endblock %}

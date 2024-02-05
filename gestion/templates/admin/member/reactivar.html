@@ -1,0 +1,36 @@
+{% extends "admin/base_site.html" %}
+
+{% load static %}
+
+{% block extrahead %}
+{{ block.super }}
+<script type="text/javascript" src="{% static 'gestion/js/jquery-3.1.1.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'gestion/js/forms/reactivar.js' %}"></script>
+{% endblock %}
+
+{% block content %}
+  {% if form.errors %}
+      {% for field in form %}
+          {% for error in field.errors %}
+              <div class="alert alert-danger">
+                  <strong>{{ error|escape }}</strong>
+              </div>
+          {% endfor %}
+      {% endfor %}
+      {% for error in form.non_field_errors %}
+          <div class="alert alert-danger">
+              <strong>{{ error|escape }}</strong>
+          </div>
+      {% endfor %}
+  {% endif %}
+  <form action="" method="post">
+    {% csrf_token %}
+
+    <table>
+      {{ form.as_table }}
+    </table>
+
+    <input type="submit" id="btnAñadir" name="apply" value="Registrar alta">
+    <br><br><a href="{{ request.META.HTTP_REFERER }}">Cancelar y volver</a>
+  </form>
+{% endblock %}

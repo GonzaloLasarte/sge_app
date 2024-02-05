@@ -1,0 +1,451 @@
+{% extends "gestion/base.html" %}
+
+{% load i18n static %}
+
+{% load admin_urls %}
+
+{% block title %}Detalle de miembro{% endblock%}
+
+{% block content %}
+
+	<div class="main-panel full-width">
+		<div class="content">
+          <div class="container-fluid">
+              <div class="row">
+                  <div class="col-md-4">
+                      <div class="card card-profile">
+                          <div class="card-avatar">
+                            <img class="img" src="../media/{{ member.get_foto }}">
+                          </div>
+                          <div class="card-content">
+                              <!-- <h4 class="card-title"><b>{{ member }}</b></h4> -->
+                              <h3 class="description"><strong>{{ member }}</strong></h3>
+                              <h3 class="description">{{ member.departamento }}</h3>
+                              {% if member.cargo_set.all %}
+                                <h3 class="description align-left">Cargos:</h3>
+                                    {% for cargo in member.cargo_set.all %}
+                                        {% if not cargo.fecha_fin %}
+                                            <li class="description align-left">{{ cargo }}</li>
+                                        {% endif %}
+                                    {% endfor %}
+                              {% else %}
+                                <h5 class="description">Sin cargos</h5>
+                              {% endif %}
+                              </p>
+                          </div>
+                      </div>
+                      <div class="card">
+                          <div class="card-header card-header-icon" data-background-color="sienna">
+                            <i class="material-icons">person</i>
+                          </div>
+                          <div class="card-content">
+                            <h4 class="card-title">Recomendado por</h4>
+                            <div class="row">
+                              <ul>
+                                    <li><a href="/member/{{ member.recomendado_por_1.pk }}">{{ member.recomendado_por_1 | default:'-'}}</a></li>
+                                    <li><a href="/member/{{ member.recomendado_por_2.pk }}">{{ member.recomendado_por_2 | default:'-'}}</a></li>
+                                </ul>
+                            </div>
+                            {% if member.recomendacion %}
+                            <h4 class="card-title">Comentarios de alta</h4>
+                            <div class="col-md-12">
+                                <p>{{ member.recomendacion }}</p>
+                            </div>
+                            {% endif %}
+                          </div>
+                        </div>
+                  </div>
+                  <div class="col-md-8">
+                      <div class="nav-center">
+                          <ul class="nav nav-pills nav-pills-danger nav-pills-icons" role="tablist">
+                              <!--
+                                  color-classes: "nav-pills-primary", "nav-pills-info", "nav-pills-success", "nav-pills-warning","nav-pills-danger"
+                              -->
+                              <li class="active">
+                                  <a href="#description-1" role="tab" data-toggle="tab" aria-expanded="true">
+                                      <i class="material-icons">info</i>
+                                      Descripción
+                                  </a>
+                              </li>
+                              <li class="">
+                                  <a href="#schedule-1" role="tab" data-toggle="tab" aria-expanded="false">
+                                      <i class="material-icons">location_on</i>
+                                      Localización
+                                  </a>
+                              </li>
+                              <li class="">
+                                  <a href="#tasks-1" role="tab" data-toggle="tab" aria-expanded="false">
+                                      <i class="material-icons">business</i>
+                                      Organización
+                                  </a>
+                              </li>
+                              <li class="">
+                                  <a href="#tasks-2" role="tab" data-toggle="tab" aria-expanded="false">
+                                      <i class="material-icons">assignment</i>
+                                      Membresía
+                                  </a>
+                              </li>
+                              <li class="">
+                                <a href="#tasks-3" role="tab" data-toggle="tab" aria-expanded="false">
+                                    <i class="material-icons">timeline</i>
+                                    Cronología
+                                </a>
+                            </li>
+                          </ul>
+                      </div>
+  
+                      <div class="tab-content">
+                          <div class="tab-pane active" id="description-1">
+                              <div class="card">
+                                  <div class="card-header">
+                                      <h4 class="card-title">Datos personales</h4>
+                                  </div>
+                                  <div class="card-content">
+                                      <form style="pointer-events: none;">
+                                            <div class="row">
+                                                <div class="col-md-3">
+                                                    <div class="form-group label-floating">
+                                                        <label class="control-label">Nombre</label>
+                                                        <input type="text" class="form-control" disabled="" value="{{ member.nombre | default:'-'}}">
+                                                    <span class="material-input"></span></div>
+                                                </div>
+                                                <div class="col-md-7">
+                                                    <div class="form-group label-floating">
+                                                        <label class="control-label">Apellidos</label>
+                                                        <input type="text" class="form-control" value="{{ member.apellidos | default:'-'}}">
+                                                    <span class="material-input"></span></div>
+                                                </div>
+                                                <div class="col-md-2">
+                                                    <div class="form-group label-floating">
+                                                        <label class="control-label">DNI/NIE/PASAPORTE</label>
+                                                        <input type="text" class="form-control text-center" value="{{ member.dni | default:'-' }}"> 
+                                                    <span class="material-input"></span></div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-2">
+                                                    <div class="form-group label-floating">
+                                                        <label class="control-label">Fecha de nacimiento</label>
+                                                        <input type="text" class="form-control" value="{{ member.fecha_nacimiento | default:'-' }}"> 
+                                                    <span class="material-input"></span></div>
+                                                </div>
+                                                <div class="col-md-10">
+                                                    <div class="form-group label-floating">
+                                                        <label class="control-label">E-mail</label>
+                                                        <input type="email" class="form-control" value="{{ member.email | default:'-'}}"> 
+                                                    <span class="material-input"></span></div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-3">
+                                                    <div class="form-group label-floating">
+                                                        <label class="control-label">Teléfono fijo</label>
+                                                        <input type="text" class="form-control text-center" value="{{ member.telefono | default:'-'}}"> 
+                                                    <span class="material-input"></span></div>
+                                                </div>
+                                                <div class="col-md-3 col-md-offset-1">
+                                                    <div class="form-group label-floating">
+                                                        <label class="control-label">Móvil</label>
+                                                        <input type="text" class="form-control text-center" value="{{ member.movil | default:'-'}}"> 
+                                                    <span class="material-input"></span></div>
+                                                </div>
+                                                <div class="col-md-3 col-md-offset-1">
+                                                    <div class="form-group label-floating">
+                                                        <label class="control-label">Departamento</label>
+                                                        <input type="text" class="form-control  text-center" value="{{ member.departamento | default:'-' }}"> 
+                                                    <span class="material-input"></span></div>
+                                                </div>
+                                            </div>
+                                      </form>
+                                  </div>
+                              </div>
+                          </div>
+                          <div class="tab-pane" id="schedule-1">
+                              <div class="card">
+                                  <div class="card-header">
+                                      <h4 class="card-title">Localización</h4>
+                                  </div>
+                                  <div class="card-content">
+                                      <form style="pointer-events: none;">
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <div class="form-group label-floating">
+                                                        <label class="control-label">Dirección</label>
+                                                        <input type="text" class="form-control" disabled="" value="{{ member.direccion | default:'-'}}">
+                                                    <span class="material-input"></span></div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-4">
+                                                    <div class="form-group label-floating">
+                                                        <label class="control-label">Población</label>
+                                                        <input type="text" class="form-control" value="{{ member.localidad | default:'-'}}"> 
+                                                    <span class="material-input"></span></div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="form-group label-floating">
+                                                        <label class="control-label">Provincia</label>
+                                                        <input type="text" class="form-control" value="{{ member.provincia | default:'-'}}"> 
+                                                    <span class="material-input"></span></div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="form-group label-floating">
+                                                        <label class="control-label">Código postal</label>
+                                                        <input type="text" class="form-control" value="{{ member.codigo_postal | default:'-'}}"> 
+                                                    <span class="material-input"></span></div>
+                                                </div>
+                                            </div>
+                                          <div class="clearfix"></div>
+                                      </form>
+                                  </div>
+                              </div>
+                          </div>
+                          <div class="tab-pane" id="tasks-1">
+                              <div class="card">
+                                  <div class="card-header">
+                                      <h4 class="card-title">Datos de la organización</h4>
+                                  </div>
+                                  <div class="card-content">
+                                      <form style="pointer-events: none;">
+                                            <div class="row">
+                                                <div class="col-md-3">
+                                                    <div class="form-group label-floating">
+                                                        <label class="control-label">Región</label>
+                                                        <input type="text" class="form-control" disabled="" value="{{ member.region | default:'-'}}">
+                                                    <span class="material-input"></span></div>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <div class="form-group label-floating">
+                                                        <label class="control-label">Zona</label>
+                                                        <input type="text" class="form-control" value="{{ member.zona | default:'-'}}"> 
+                                                    <span class="material-input"></span></div>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <div class="form-group label-floating">
+                                                        <label class="control-label">Distrito General</label>
+                                                        <input type="text" class="form-control" value="{{ member.distrito_general | default:'-'}}"> 
+                                                    <span class="material-input"></span></div>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <div class="form-group label-floating">
+                                                        <label class="control-label">Distrito</label>
+                                                        <input type="text" class="form-control" value="{{ member.distrito | default:'-'}}"> 
+                                                    <span class="material-input"></span></div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <div class="form-group label-floating">
+                                                        <label class="control-label">Grupo</label>
+                                                        <input type="text" class="form-control" disabled="" value="{{ member.grupo | default:'-'}}">
+                                                    <span class="material-input"></span></div>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <div class="form-group label-floating">
+                                                        <label class="control-label">Estudios</label>
+                                                        <input type="text" class="form-control" value="{{ member.estudio | default:'-'}}"> 
+                                                    <span class="material-input"></span></div>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <div class="form-group label-floating">
+                                                        <label class="control-label">Fecha estudios</label>
+                                                        <input type="text" class="form-control" value="{{ member.fecha_estudio | default:'-' }}"> 
+                                                    <span class="material-input"></span></div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <div class="form-group label-floating">
+                                                        <label class="control-label">Observaciones</label>
+                                                        <input type="text" class="form-control" value="{{ member.observaciones | default:'-' }}"> 
+                                                    <span class="material-input"></span></div>
+                                                </div>
+                                            </div>
+                                          <div class="clearfix"></div>
+                                      </form>
+                                  </div>
+                              </div>
+                          </div>
+                          <div class="tab-pane" id="tasks-2">
+                              <div class="card">
+                                  <div class="card-header">
+                                      <h4 class="card-title">Membresía</h4>
+                                  </div>
+                                  <div class="card-content">
+                                      <form style="pointer-events: none;">
+                                            <div class="row">
+                                                <div class="col-md-2">
+                                                    <div class="form-group label-floating">
+                                                        <label class="control-label">Fecha de ingreso SG</label>
+                                                        <input type="text" class="form-control" disabled="" value="{{ member.fecha_ingreso | default:'-' }}">
+                                                    <span class="material-input"></span></div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="form-group label-floating">
+                                                        <label class="control-label">Registro</label>
+                                                        <input type="text" class="form-control" value="{{ member.alta | default:'-'  }}"> 
+                                                    <span class="material-input"></span></div>
+                                                </div>
+                                                {% if member.alta == "Llegada desde el extranjero" %}
+                                                <div class="col-md-3">
+                                                    <div class="form-group label-floating">
+                                                        <label class="control-label">Origen</label>
+                                                        <input type="text" class="form-control" value="{{ member.origen | default:'-'}}"> 
+                                                    <span class="material-input"></span></div>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <div class="form-group label-floating">
+                                                        <label class="control-label">Fecha incorporación SGEs</label>
+                                                        <input type="text" class="form-control" value="{{ member.fecha_llegada_extranjero | default:'-'}}"> 
+                                                    <span class="material-input"></span></div>
+                                                </div>
+                                                {% endif %}
+                                            </div>
+                                            {% if member.fecha_baja %}
+                                            <div class="row">
+                                                <div class="col-md-4">
+                                                    <div class="form-group label-floating">
+                                                        <label class="control-label">Fecha baja</label>
+                                                        <input type="text" class="form-control" disabled="" value="{{ member.fecha_baja | default:'-' }}">
+                                                    <span class="material-input"></span></div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="form-group label-floating">
+                                                        <label class="control-label">Baja</label>
+                                                        <input type="text" class="form-control" disabled="" value="{{ member.baja | default:'-' }}">
+                                                    <span class="material-input"></span></div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="form-group label-floating">
+                                                        <label class="control-label">Destino</label>
+                                                        <input type="text" class="form-control" value="{{ member.destino | default:'-' }}"> 
+                                                    <span class="material-input"></span></div>
+                                                </div>
+                                            </div>
+                                            {% endif %}
+                                            <div class="row">
+                                                <div class="col-md-2">
+                                                    <div class="form-group label-floating">
+                                                        <label class="control-label">Omamori Gohonzon</label>
+                                                        <div class="text-center">
+                                                            {% if member.omamori_gohonzon %}
+                                                                <i class="material-icons" style="color: green">check</i>
+                                                            {% else %}
+                                                                <i class="material-icons" style="color: red">clear</i>
+                                                            {% endif %}
+                                                        </div>
+                                                    <span class="material-input"></span></div>
+                                                </div>
+                                                {% if member.omamori_fecha %}
+                                                <div class="col-md-3">
+                                                    <div class="form-group label-floating">
+                                                        <label class="control-label">Fecha Omamori Gohonzon</label>
+                                                        <input type="text" class="form-control" value="{{ member.omamori_fecha | default:'-'  }}">
+                                                    <span class="material-input"></span></div>
+                                                </div>
+                                                {% endif %}
+                                                {% if member.gohonzon_familiar %}
+                                                    <div class="col-md-7">
+                                                        <div class="form-group label-floating">
+                                                            <label class="control-label">Familiar con Gohonzon</label>
+                                                            <input type="text" class="form-control" value="{{ member.gohonzon_familiar | default:'-'  }}">
+                                                        <span class="material-input"></span></div>
+                                                    </div>
+                                                {% endif %}
+                                                <div class="col-md-3">
+                                                    <div class="form-group label-floating">
+                                                        <label class="control-label">Fecha Gohonzon</label>
+                                                        <input type="text" class="form-control" value="{{ member.fecha_gohonzon | default:'-'  }}">
+                                                    <span class="material-input"></span></div>
+                                                </div>
+                                            </div>
+                                          <div class="clearfix"></div>
+                                      </form>
+                                  </div>
+                              </div>
+                          </div>
+                          <div class="tab-pane" id="tasks-3">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h4 class="card-title">Cronología</h4>
+                                </div>
+                                <div class="card-content">
+                                    <form style="pointer-events: none;">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="card card-plain">
+                                                    <div class="card-content">
+                                                        <ul class="timeline">
+                                                            {% for evento in member.eventos %}
+                                                            <li class="timeline-{% if forloop.counter|divisibleby:2 %}inverted{% else %}{% endif %}">
+                                                                <div class="timeline-badge label-{{ evento.color }}">
+                                                                    <i class="material-icons">{{ evento.icono }}</i>
+                                                                </div>
+                                                                <div class="timeline-panel">
+                                                                    <div class="timeline-heading">
+                                                                        <span class="label label-{{ evento.color }}">{{ evento.DESC }}</span>
+                                                                    </div>
+                                                                    {% if evento.DESC2 %}
+                                                                    <div class="timeline-body">
+                                                                        <p>{{ evento.DESC2}}</p>
+                                                                    </div>
+                                                                    {% endif %}
+                                                                    <h6>
+                                                                        <i class="ti-time"></i>
+                                                                        {{ evento.fecha_format|date:"d/m/Y" }}
+                                                                    </h6>
+                                                                </div>
+                                                            </li>
+                                                            {% endfor %}
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="clearfix"></div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% if user.is_responsable %}
+                        <button type="submit" class="btn btn-primary pull-right"
+                            onclick="location.href='{% url opts|admin_urlname:'change' member.pk %}';">
+                        Editar
+                        </button>
+                    {% endif %}
+                    {% if user.is_admin and not member.fecha_baja %}
+                        <button class="btn btn-danger pull-left" data-toggle="modal" data-target="#bajaModal">
+                            Dar de baja
+                        </button>
+                        <div class="clearfix"></div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+    <!-- Modal -->
+<div class="modal fade" id="bajaModal" tabindex="-1" role="dialog" aria-labelledby="bajaModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="bajaModalLabel">Dar de baja</h5>
+          </div>
+          <div class="modal-body">
+            <p>Se va a proceder de dar de baja al miembro:</p>
+            <p><b>{{ member }}</b></p>
+            <p>{{ member.grupo }}</p>
+            <p>¿Está seguro?</p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary pull-left" data-dismiss="modal">Cancelar</button>
+            <a href="{% url opts|admin_urlname:'delete' member.pk %}"><button class="btn btn-danger">CONTINUAR</button></a>
+          </div>
+        </div>
+    </div>
+</div>
+    
+
+{% endblock %}

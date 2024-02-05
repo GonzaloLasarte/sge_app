@@ -1,0 +1,94 @@
+{% extends "gestion/layout.html" %}
+{% block content %}
+
+    <div class="container-fluid">
+        <!-- <div class="row">
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-header card-header-icon" data-background-color="rose">
+                        <i class="material-icons">assignment</i>
+                    </div>
+                    <div class="card-content">
+                        <h4 class="card-title">Número total miembros</h4>
+
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead class="text-primary">
+                                    <tr><th>Código</th>
+                                    <th>Días transcurridos</th>
+                                </tr></thead>
+                                <tbody>
+                                    {% for proyecto in proyectos %}
+                                        {% if proyecto.certificado_sin_recibir > 30 %}
+                                        <tr>
+                                            <td class="text-center">{{ proyecto.codigo }}</td>
+                                            <td class="text-primary text-center">{{ proyecto.certificado_sin_recibir }}</td>
+                                        </tr>
+                                        {% endif %}
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-header card-header-icon" data-background-color="orange">
+                        <i class="material-icons">assignment</i>
+                    </div>
+                    <div class="card-content">
+                        <h4 class="card-title">Certificados sin enviar +15 días</h4>
+
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead class="text-primary">
+                                    <tr><th>Código</th>
+                                    <th>Días transcurridos</th>
+                                </tr></thead>
+                                <tbody>
+                                    {% for proyecto in proyectos %}
+                                        {% if proyecto.certificado_sin_enviar > 15 %}
+                                        <tr>
+                                            <td class="text-center">{{ proyecto.codigo }}</td>
+                                            <td class="text-primary text-center">{{ proyecto.certificado_sin_enviar }}</td>
+                                        </tr>
+                                        {% endif %}
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-header card-header-icon" data-background-color="green">
+                        <i class="material-icons">assignment</i>
+                    </div>
+                    <div class="card-content">  
+                        <a href="/tarea/new" class="btn btn-primary btn-round btn-fab btn-fab-mini pull-right"><i class="material-icons">add</i></a>
+                        <h4 class="card-title">Tareas</h4>
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead class="text-primary">
+                                    <tr><th>Descripción</th>
+                                    <th>Prioridad</th>
+                                </tr></thead>
+                                <tbody>
+                                    {% for tarea in tareas %}
+                                        <tr>
+                                            <td>{{ tarea.descripcion }}</td>
+                                            <td>{{ tarea.prioridad }}</td>
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div> -->
+    </div>
+
+{% endblock %}

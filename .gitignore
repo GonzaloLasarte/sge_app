@@ -1,0 +1,7 @@
+*.pyc 
+/.venv/*
+settings.json
+.vscode
+server.log
+/sge_app/static
+.mysql-data

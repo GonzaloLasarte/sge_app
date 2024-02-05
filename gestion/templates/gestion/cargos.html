@@ -1,0 +1,825 @@
+{% extends "gestion/base.html" %}
+
+{% load i18n static %}
+
+{% block title %}Listado de cargos{% endblock %}
+
+{% block content %}
+<div class="wrapper">
+	{% include "gestion/sidebar_cargos.html" %}
+	<div class="main-panel">
+		<div class="content">
+			<div class="container-fluid">
+					<div class="navbar-minimize">
+						<button id="minimizeSidebar" class="btn btn-round btn-white btn-fill btn-just-icon">
+							<i class="material-icons visible-on-sidebar-regular">more_vert</i>
+							<i class="material-icons visible-on-sidebar-mini">view_list</i>
+						<div class="ripple-container"></div></button>
+
+						<div class="pull-right">
+							<span><a href="/" class="card-title text-primary">Miembros</a> - </span>
+							<span><a href="/cargos" class="card-title text-primary"> <b> Cargos de responsabilidad</b></a> - </span>
+							<span><a href="/cargos_capacitacion" class="card-title text-primary"> Cargos de capacitación</a></span>
+						</div>
+					<div>
+				<div class="row">
+					<div class="col-md-12">
+						<div class="card">
+							<div class="card-content">
+								{% if request.user.is_nacional %}
+								<div class="pull-right">
+									<span class="dropdown" style="margin-left: 2rem">
+										<button href="#" class="dropdown-toggle btn btn-primary btn-round" data-toggle="dropdown" aria-expanded="true" id="estadoButton">Estado <b class="caret"></b><div class="ripple-container"></div></button>
+										<ul class="dropdown-menu dropdown-menu-left">
+											<li>
+												<div class="radio">
+													<label><input type="radio" name="estadoradio" id="estadoRadioTodos" value="todos">Todos</label>
+												</div>
+											</li>
+											<li>
+												<div class="radio">
+													<label><input type="radio" name="estadoradio" id="estadoRadioActivos" value="activos" checked> Sólo activos</label>
+												</div>
+											</li>
+											<li>
+												<div class="radio">
+													<label><input type="radio" name="estadoradio" id="estadoRadioBajas" value="bajas"> Sólo bajas</label>
+												</div>
+											</li>
+										</ul>
+									</span>
+								</div>
+								{% endif %}
+								<h4 class="card-title text-primary"><b>Cargos</b></h4>
+								<div class="toolbar">
+									Cargando...
+								</div>
+								<div class="material-datatables">
+									<table id="datatables" class="table table-striped table-no-bordered table-hover" cellspacing="0" width="100%" style="width:100%">
+										<thead>
+											<tr>
+												<th>Nombre</th>
+												<th>Apellidos</th>
+												<th>Rango</th>
+												<th>Departamento</th>
+												<th>Nivel</th>
+												<th>A cargo de</th>
+												<th>Fecha inicio cargo</th>
+												<th>Fecha fin cargo</th>
+												<th>Object id</th>
+												<th>Fecha nacimiento</th>
+												<th>Estudio</th>
+												<th>Fecha estudio</th>
+												<th>Omamori Gohonzon</th>
+												<th>Fecha Omamori Gohonzon</th>
+												<th>Código postal</th>
+												<th>Región</th>
+												<th>Zona</th>
+												<th>Distrito General</th>
+												<th>Distrito</th>
+												<th>Grupo</th>
+												<th>Región cargo</th>
+												<th>Zona cargo</th>
+												<th>Distrito General cargo</th>
+												<th>Distrito cargo</th>
+												<th>Grupo cargo</th>
+												<th>Localidad</th>
+												<th>Móvil</th>
+												<th>Correo electrónico</th>
+											</tr>
+										</thead>
+										<tfoot>
+											<tr>
+												<th>Nombre</th>
+												<th>Apellidos</th>
+												<th>Rango</th>
+												<th>Departamento</th>
+												<th>Nivel</th>
+												<th>A cargo de</th>
+												<th>Fecha inicio cargo</th>
+												<th>Fecha fin cargo</th>
+												<th>Object id</th>
+												<th>Fecha nacimiento</th>
+												<th>Estudio</th>
+												<th>Fecha estudio</th>
+												<th>Omamori Gohonzon</th>
+												<th>Fecha Omamori Gohonzon</th>
+												<th>Código postal</th>
+												<th>Región</th>
+												<th>Zona</th>
+												<th>Distrito General</th>
+												<th>Distrito</th>
+												<th>Grupo</th>
+												<th>Región cargo</th>
+												<th>Zona cargo</th>
+												<th>Distrito General cargo</th>
+												<th>Distrito cargo</th>
+												<th>Grupo cargo</th>
+												<th>Localidad</th>
+												<th>Móvil</th>
+												<th>Correo electrónico</th>
+											</tr>
+										</tfoot>
+										<tbody>
+											{% for cargo in cargos %}
+												<tr>
+													<td class="text-center text-primary"><a class="text-primary" href="member/{{ cargo.member_id }}">{{ cargo.nombre|default:"-"}}</a></td>
+													<td class="text-center text-primary"><a class="text-primary" href="member/{{ cargo.member_id }}">{{ cargo.apellidos|default:"-"}}</a></td>
+													<td class="text-center">{{ cargo.rango|default:"-" }}</td>
+													<td class="text-center">{{ cargo.departamento|default:"-" }}</td>
+													<td class="text-center">{{ cargo.nivel|default:"-" }}</td>
+													<td class="text-center">{{ cargo.a_cargo_de|default:"-" }}</td>
+													<td class="text-center">{{ cargo.fecha_inicio|default:"-" }}</td>
+													<td class="text-center">{{ cargo.fecha_fin|default:"-" }}</td>
+													<td class="text-center">{{ cargo.object_id|default:"-" }}</td>
+													<td class="text-center">{{ cargo.fecha_nacimiento|default:"-" }}</td>
+													<td class="text-center">{{ cargo.estudio|default:"-" }}</td>
+													<td class="text-center">{{ cargo.fecha_estudio|default:"-" }}</td>
+													<td class="text-center">{% if cargo.omamori_gohonzon %}Sí{% else %}No{% endif %}</td>
+													<td class="text-center">{{ cargo.omamori_fecha|default:"-" }}</td>
+													<td class="text-center">{{ cargo.codigo_postal|default:"-" }}</td>
+													<td class="text-center">{{ cargo.region|default:"-" }}</td>
+													<td class="text-center">{{ cargo.zona|default:"-" }}</td>
+													<td class="text-center">{{ cargo.distrito_general|default:"-" }}</td>
+													<td class="text-center">{{ cargo.distrito|default:"-" }}</td>
+													<td class="text-center">{{ cargo.grupo|default:"-" }}</td>
+													<td class="text-center">{{ cargo.id_region_cargo|default:"-" }}</td>
+													<td class="text-center">{{ cargo.id_zona_cargo|default:"-" }}</td>
+													<td class="text-center">{{ cargo.id_distrito_general_cargo|default:"-" }}</td>
+													<td class="text-center">{{ cargo.id_distrito_cargo|default:"-" }}</td>
+													<td class="text-center">{{ cargo.id_grupo_cargo|default:"-" }}</td>
+													<td class="text-center">{{ cargo.localidad|default:"-" }}</td>
+													<td class="text-center">{{ cargo.movil|default:"-" }}</td>
+													<td class="text-center">{{ cargo.email|default:"-" }}</td>
+												</tr>
+											{% endfor %}
+										</tbody>
+									</table>
+								</div>
+							</div><!-- end content-->
+						</div><!--  end card  -->
+					</div> <!-- end col-md-12 -->
+				</div> <!-- end row -->
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+
+$(document).ready(function() {
+
+	function get_estructura(id, field, child, input, funcion) {
+		$.getJSON('/getEstructura/',{id:id,field:field,child:child}, function(j){
+			var options = '<li class="dropdown-header">Seleccione ' + child + '</li>'; 
+			input.html(options); 
+			for (var i = 0; i < j.length; i++) {
+				element = $('<li><a href="#"><option value="' + j[i][0]+ '" class="regiones-selector">' + j[i][1] + '</option></a></li>');
+				element.click(funcion);
+				input.append(element);
+			} 
+			// inspect html to check id of subcategory select dropdown.
+		}); 
+	}
+
+	$(".toggle-vis").prop('checked', true);
+
+	$("[data-column=10]").prop('checked', false);
+	$("[data-column=11]").prop('checked', false);
+	$("[data-column=12]").prop('checked', false);
+	$("[data-column=13]").prop('checked', false);
+	$("[data-column=14]").prop('checked', false);
+	$("[data-column=15]").prop('checked', false);
+	$("[data-column=16]").prop('checked', false);
+	$("[data-column=17]").prop('checked', false);
+	$("[data-column=18]").prop('checked', false);
+	$("[data-column=19]").prop('checked', false);
+	$("[data-column=25]").prop('checked', false);
+	$("[data-column=26]").prop('checked', false);
+	$("[data-column=27]").prop('checked', false);
+
+	function filterGlobal () {
+		$('#datatables').DataTable().search(
+			$('#global_filter').val(),
+			$('#global_regex').prop('checked'),
+			$('#global_smart').prop('checked')
+		).draw();
+	}
+	
+	function filterColumn ( i ) {
+		$('#datatables').DataTable().column( i ).search(
+			$('#col'+i+'_filter').val(),
+			$('#col'+i+'_regex').prop('checked'),
+			$('#col'+i+'_smart').prop('checked')
+		).draw();
+	}
+	$.fn.dataTable.Api.register( 'column().title()', function () {
+		var colheader = this.header();
+		return $(colheader).text().trim();
+	} );
+
+	$('#estadoRadioTodos').on('click',function() {
+		table.column(7).search( '' ).draw();
+		$('#estadoButton').text('Todos');
+	});
+
+	$('#estadoRadioActivos').on('click',function() {
+		table.column(7).search('-', true).draw();
+		$('#estadoButton').text('Sólo activos');
+	});
+
+	$('#estadoRadioBajas').on('click',function() {
+		table.column(7).search( '[^-]', true, false ).draw();
+		$('#estadoButton').text('Sólo bajas');
+	});
+
+	$.fn.dataTable.ext.order.intl( 'es' );
+
+	var table = $('#datatables').DataTable({
+		dom: 'lBfrtip',
+		buttons: [
+			'copy', 'csv', 'excel', 'print'
+		],
+		// "order": [[ 9, "desc" ]],
+		"aaSorting": [], // disable initial sorting
+		"pagingType": "full_numbers",
+		"lengthMenu": [[10, 20, 50, -1], [10, 20, 50, "Todos"]],
+		"search": {
+			regex: true,
+			caseInsensitive: true
+		},
+		"bRetrieve": true,
+		responsive: true,
+		language: {
+			"sProcessing": "Procesando...",
+			"sLengthMenu": "Mostrar _MENU_ registros",
+			"sZeroRecords": "No se encontraron resultados",
+			"sEmptyTable": "Ningún dato disponible en esta tabla",
+			"sInfo": "Registros _START_ al _END_ de _TOTAL_",
+			"sInfoEmpty": "Registros 0 al 0 de 0",
+			"sInfoFiltered": "(filtrado)",
+			"sInfoPostFix": "",
+			"sSearch": "Buscar",
+			"sUrl": "",
+			"sInfoThousands": ".",
+			"sLoadingRecords": "Cargando...",
+			"oPaginate": {
+				"sFirst": "Primero",
+				"sLast": "Último",
+				"sNext": "Siguiente",
+				"sPrevious": "Anterior"
+			},
+			"oAria": {
+				"sSortAscending": ": Activar para ordenar la columna de manera ascendente",
+				"sSortDescending": ": Activar para ordenar la columna de manera descendente"
+			}
+		},
+		initComplete: function(settings, json) {
+			$('#datatables').show();
+			$('.toolbar').hide();
+		},
+	});
+
+	const idRegionCargoColumn = 20;
+	const idZonaCargoColumn = 21;
+	const idDistritoGeneralCargoColumn = 22;
+	const idDistritoCargoColumn = 23;
+	const idGrupoCargoColumn = 24;
+
+	table.columns( [
+		8, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, idRegionCargoColumn,
+		idZonaCargoColumn, idDistritoGeneralCargoColumn, idDistritoCargoColumn,
+		idGrupoCargoColumn, 25, 26, 27
+	] ).visible( false );
+
+	function aplicarFiltroInicial() {
+			// La tabla se inicia filtrada por sólo los activos
+			$("#estadoRadioActivos").trigger("click");
+		}
+		aplicarFiltroInicial();
+
+	function filtrarTabla(column_number, text) {
+		text = $.fn.dataTable.util.escapeRegex(text)
+		table                    
+			.column(column_number)
+			.search( text ? '^'+text+'$' : '', true, false )
+			.draw()
+		;
+	}
+
+	function resetElemento(text, column_number) {
+		var htmlContent = '<li class="dropdown-header">Sin ' + text + '</li>';
+		$('#' + text + 'List').html(htmlContent);
+		$('#' + text + 'Btn').html(text + ' <b class="caret"></b><div class="ripple-container"></div>');
+		$('#reset' + text + 'Btn').hide();
+		filtrarTabla(column_number, '');
+	};
+
+	// regiones
+	$(".regiones-selector").on('click', function() {
+		resetElemento('zonas', idZonaCargoColumn);
+		resetElemento('DG', idDistritoGeneralCargoColumn);
+		resetElemento('distritos', idDistritoCargoColumn);
+		resetElemento('grupos', idGrupoCargoColumn);
+		$('#DGBtn').hide();
+		$('#distritosBtn').hide();
+		$('#gruposBtn').hide();
+		$('#resetRegionesBtn').show();
+		$('#resetZonasBtn').hide();
+		filtrarTabla(idRegionCargoColumn, this.value);
+		$('#regionesList').html('<option value="' + this.value + '">' + this.text + '</option><b class="caret"></b><div class="ripple-container"></div>');
+		// $('#regionesList').close();
+		rellenarZonas(this.value);
+	});
+
+	$("#resetRegionesBtn").on('click', function() {
+		resetearEstructura();
+	});
+
+	function resetearEstructura() {
+		resetElemento('zonas', idZonaCargoColumn);
+		resetElemento('DG', idDistritoGeneralCargoColumn);
+		resetElemento('distritos', idDistritoCargoColumn);
+		resetElemento('grupos', idGrupoCargoColumn);
+		
+		$('#regionesList').html('REGIONES ' + '<b class="caret"></b><div class="ripple-container"></div>');
+		$('#resetRegionesBtn').hide();
+		table.column(idRegionCargoColumn).search( '' ).draw();
+		$('#zonasBtn').hide();
+		$('#DGBtn').hide();
+		$('#distritosBtn').hide();
+		$('#gruposBtn').hide();
+	};
+
+	// zonas
+	function rellenarZonas(region) {
+		$('#zonasBtn').show();
+		get_estructura(region, 'region', 'Zona', $("#zonasList"), handlerZona);
+		$('#resetzonasBtn').hide();
+    }
+
+	function handlerZona() {
+		resetElemento('DG');
+		resetElemento('distritos');
+		resetElemento('grupos');
+		$('#distritosBtn').hide();
+		$('#gruposBtn').hide();
+
+		$('#resetzonasBtn').show(); 
+		zona_pk = $(this).find("option").val()
+		$('#zonasBtn').html('<option value="' + zona_pk + '">' + this.textContent + '</option><b class="caret"></b><div class="ripple-container"></div>');
+		filtrarTabla(idZonaCargoColumn, zona_pk);
+		rellenarDG(zona_pk);
+
+		$('#resetDGBtn').hide();
+		$('#resetdistritosBtn').hide();
+		$('#resetgruposBtn').hide();
+	}
+
+	$("#resetzonasBtn").on('click', function() {
+		table.column(idZonaCargoColumn).search( '' ).draw();
+		resetElemento('DG', idDistritoGeneralCargoColumn);
+		resetElemento('distritos', idDistritoCargoColumn)
+		resetElemento('grupos', idGrupoCargoColumn);
+		$('#zonasBtn').html('ZONAS ' + '<b class="caret"></b><div class="ripple-container"></div>');
+		var region_pk = $('#regionesList').find("option").val()
+		filtrarTabla(idRegionCargoColumn, region_pk);
+		$('#resetzonasBtn').hide();
+		$('#DGBtn').hide();
+		$('#distritosBtn').hide();
+		$('#gruposBtn').hide();
+	});
+
+	// DG
+	function rellenarDG(zona) {
+		$('#DGBtn').show();
+		get_estructura(zona, 'zona', 'DistritoGeneral', $("#DGList"), handlerDG);
+		$('#resetDGBtn').hide();
+	}
+
+	function handlerDG() { 
+		resetElemento('distritos', idDistritoCargoColumn);
+		resetElemento('grupos', idGrupoCargoColumn);
+		$('#gruposBtn').hide();
+
+		$('#resetDGBtn').show();
+		dg_pk = $(this).find("option").val()
+		$('#DGBtn').html('<option value="' + dg_pk + '">' + this.textContent + '</option><b class="caret"></b><div class="ripple-container"></div>');
+		filtrarTabla(idDistritoGeneralCargoColumn, dg_pk);
+		rellenarDistrito(dg_pk);
+
+		$('#resetdistritosBtn').hide();
+		$('#resetgruposBtn').hide();
+	}
+
+	$("#resetDGBtn").on('click', function() {
+		table.column(idDistritoGeneralCargoColumn).search( '' ).draw();
+		resetElemento('distritos', idDistritoCargoColumn);
+		resetElemento('grupos', idGrupoCargoColumn);
+		$('#DGBtn').html('DG ' + '<b class="caret"></b><div class="ripple-container"></div>');
+		var zona_pk = $('#zonasBtn').find("option").val()
+		filtrarTabla(idZonaCargoColumn, zona_pk);
+		$('#resetDGBtn').hide();
+		$('#distritosBtn').hide();
+		$('#gruposBtn').hide();
+	});
+
+	// Distrito
+	function rellenarDistrito(dg) {
+		$('#distritosBtn').show();
+		get_estructura(dg, 'distrito_general', 'Distrito', $("#distritosList"), handlerDistrito);
+		$('#resetdistritosBtn').hide();
+	}
+
+	function handlerDistrito() {
+		resetElemento('grupos', idGrupoCargoColumn);
+
+		$('#resetdistritosBtn').show();
+		distrito_pk = $(this).find("option").val()
+		$('#distritosBtn').html('<option value="' + distrito_pk + '">' + this.textContent + '</option><b class="caret"></b><div class="ripple-container"></div>');
+		filtrarTabla(idDistritoCargoColumn, distrito_pk);
+		rellenarGrupo(distrito_pk);
+
+		$('#resetgruposBtn').hide();
+	}
+
+	$("#resetdistritosBtn").on('click', function() {
+		table.column(idDistritoCargoColumn).search( '' ).draw();
+		resetElemento('grupos', idGrupoCargoColumn);
+		$('#distritosBtn').html('distrito ' + '<b class="caret"></b><div class="ripple-container"></div>');
+		var dg_pk = $('#DGBtn').find("option").val()
+		filtrarTabla(idDistritoGeneralCargoColumn, dg_pk);
+		$('#resetdistritosBtn').hide();
+		$('#gruposBtn').hide();
+	});
+
+	// Grupo
+	function rellenarGrupo(grupo) {
+		$('#gruposBtn').show();
+		get_estructura(grupo, 'distrito', 'Grupo', $("#gruposList"), handlerGrupo);
+		$('#resetgruposBtn').hide();
+	}
+
+	function handlerGrupo() { 
+		$('#resetgruposBtn').show();
+		$('#gruposBtn').html(this.textContent + '<b class="caret"></b><div class="ripple-container"></div>');
+		grupo_pk = $(this).find("option").val()
+		filtrarTabla(idGrupoCargoColumn, grupo_pk);
+	}
+
+	$("#resetgruposBtn").on('click', function() {
+		table.column(idGrupoCargoColumn).search( '' ).draw();
+		$('#gruposBtn').html('grupo ' + '<b class="caret"></b><div class="ripple-container"></div>');
+		var distrito_pk = $('#distritosBtn').find("option").val()
+		filtrarTabla(idDistritoCargoColumn, distrito_pk);
+		$('#resetgruposBtn').hide();
+	});
+
+	// Estudios
+	$(".estudios-selector").on('click', function() {
+			$('#resetEstudiosBtn').show();
+			filtrarTabla(10, this.text);
+			$('#estudiosList').html(this.text + '<b class="caret"></b><div class="ripple-container"></div>');
+		});
+
+		$("#resetEstudiosBtn").on('click', function() {
+			$('#estudiosList').html('ESTUDIOS ' + '<b class="caret"></b><div class="ripple-container"></div>');
+			$('#resetEstudiosBtn').hide();
+			filtrarTabla(10, '');
+		});
+
+	// Departamento
+	$(".departamentos-selector").on('click', function() {
+		$('#resetDepartamentosBtn').show();
+		filtrarTabla(3, this.text);
+		$('#departamentosList').html(this.text + '<b class="caret"></b><div class="ripple-container"></div>');
+	});
+
+	$("#resetDepartamentosBtn").on('click', function() {
+		$('#departamentosList').html('DEPARTAMENTOS ' + '<b class="caret"></b><div class="ripple-container"></div>');
+		$('#resetDepartamentosBtn').hide();
+		table.column(3).search('').draw();
+	});
+
+	// Nivel
+	$(".nivel-selector").on('click', function() {
+		$('#resetNivelBtn').show();
+		filtrarTabla(4, this.text);
+		$('#nivelList').html(this.text + '<b class="caret"></b><div class="ripple-container"></div>');
+	});
+
+	$("#resetNivelBtn").on('click', function() {
+		$('#nivelList').html('NIVEL ' + '<b class="caret"></b><div class="ripple-container"></div>');
+		$('#resetNivelBtn').hide();
+		table.column(4).search('').draw();
+	});
+
+	$('input.toggle-vis').unbind('click').on( 'click', function (e) {
+		// e.preventDefault();
+
+		// Get the column API object
+		var column = table.column( $(this).attr('data-column') );
+		// Toggle the visibility
+		column.visible( ! column.visible() );
+		if (column.visible() == false) {
+			$(this).addClass('column-not-visible');
+		} else {
+			$(this).removeClass('column-not-visible');
+		}
+	 } );
+
+	 // Omamori Gohonzon
+	 $(".omamori-selector").on('click', function() {
+			$('#resetOmamoriBtn').show();
+			filtrarTabla(12, this.text);
+			$('#omamoriList').html(this.text + '<b class="caret"></b><div class="ripple-container"></div>');
+		});
+
+		$("#resetOmamoriBtn").on('click', function() {
+			$('#omamoriList').html('OMAMORI GOHONZON <b class="caret"></b><div class="ripple-container"></div>');
+			$('#resetBajasBtn').hide();
+			filtrarTabla(12, '');
+		});
+
+		$('input.toggle-vis').unbind('click').on( 'click', function (e) {
+            // e.preventDefault();
+    
+            // Get the column API object
+            var column = table.column( $(this).attr('data-column') );
+            // Toggle the visibility
+            column.visible( ! column.visible() );
+            if (column.visible() == false) {
+                $(this).addClass('column-not-visible');
+            } else {
+                $(this).removeClass('column-not-visible');
+            }
+         } );
+	
+	// Rango
+	$(".rangos-selector").on('click', function() {
+		$('#resetRangosBtn').show();
+		filtrarTabla(2, this.text);
+		$('#rangosList').html(this.text + '<b class="caret"></b><div class="ripple-container"></div>');
+	});
+
+	$("#resetRangosBtn").on('click', function() {
+		$('#rangosList').html('RANGOS ' + '<b class="caret"></b><div class="ripple-container"></div>');
+		$('#resetRangosBtn').hide();
+		table.column(2).search('').draw();
+	});
+
+	 $.fn.dataTableExt.afnFiltering.push(
+		function( oSettings, aData, iDataIndex ) {
+			var iFini = document.getElementById('fbaini').value;
+			var iFfin = document.getElementById('fbafin').value;
+			var iStartDateCol = 7;
+			var iEndDateCol = 7;
+	
+			iFini=iFini.substring(6,10) + iFini.substring(3,5)+ iFini.substring(0,2);
+			iFfin=iFfin.substring(6,10) + iFfin.substring(3,5)+ iFfin.substring(0,2);
+	
+			var datofini=aData[iStartDateCol].substring(6,10) + aData[iStartDateCol].substring(3,5)+ aData[iStartDateCol].substring(0,2);
+			var datoffin=aData[iEndDateCol].substring(6,10) + aData[iEndDateCol].substring(3,5)+ aData[iEndDateCol].substring(0,2);
+	
+			if ( iFini === "" && iFfin === "" )
+			{
+				return true;
+			}
+			else if ( iFini <= datofini && iFfin === "")
+			{
+				return true;
+			}
+			else if ( iFfin >= datoffin && iFini === "")
+			{
+				return true;
+			}
+			else if (iFini <= datofini && iFfin >= datoffin)
+			{
+				return true;
+			}
+			return false;
+		},
+
+		function( oSettings, aData, iDataIndex ) {
+			var iFini = document.getElementById('fini').value;
+			var iFfin = document.getElementById('ffin').value;
+			var iStartDateCol = 6;
+			var iEndDateCol = 6;
+	
+			iFini=iFini.substring(6,10) + iFini.substring(3,5)+ iFini.substring(0,2);
+			iFfin=iFfin.substring(6,10) + iFfin.substring(3,5)+ iFfin.substring(0,2);
+	
+			var datofini=aData[iStartDateCol].substring(6,10) + aData[iStartDateCol].substring(3,5)+ aData[iStartDateCol].substring(0,2);
+			var datoffin=aData[iEndDateCol].substring(6,10) + aData[iEndDateCol].substring(3,5)+ aData[iEndDateCol].substring(0,2);
+	
+			if ( iFini === "" && iFfin === "" )
+			{
+				return true;
+			}
+			else if ( iFini <= datofini && iFfin === "")
+			{
+				return true;
+			}
+			else if ( iFfin >= datoffin && iFini === "")
+			{
+				return true;
+			}
+			else if (iFini <= datofini && iFfin >= datoffin)
+			{
+				return true;
+			}
+			return false;
+		},
+
+		function( oSettings, aData, iDataIndex ) {
+			var iFini = document.getElementById('fnacini').value;
+			var iFfin = document.getElementById('fnacfin').value;
+			var iStartDateCol = 9;
+			var iEndDateCol = 9;
+	
+			iFini=iFini.substring(6,10) + iFini.substring(3,5)+ iFini.substring(0,2);
+			iFfin=iFfin.substring(6,10) + iFfin.substring(3,5)+ iFfin.substring(0,2);
+	
+			var datofini=aData[iStartDateCol].substring(6,10) + aData[iStartDateCol].substring(3,5)+ aData[iStartDateCol].substring(0,2);
+			var datoffin=aData[iEndDateCol].substring(6,10) + aData[iEndDateCol].substring(3,5)+ aData[iEndDateCol].substring(0,2);
+	
+			if ( iFini === "" && iFfin === "" )
+			{
+				return true;
+			}
+			else if ( iFini <= datofini && iFfin === "")
+			{
+				return true;
+			}
+			else if ( iFfin >= datoffin && iFini === "")
+			{
+				return true;
+			}
+			else if (iFini <= datofini && iFfin >= datoffin)
+			{
+				return true;
+			}
+			return false;
+		},
+
+		function( oSettings, aData, iDataIndex ) {
+			var iFini = document.getElementById('fesini').value;
+			var iFfin = document.getElementById('fesfin').value;
+			var iStartDateCol = 11;
+			var iEndDateCol = 11;
+	
+			iFini=iFini.substring(6,10) + iFini.substring(3,5)+ iFini.substring(0,2);
+			iFfin=iFfin.substring(6,10) + iFfin.substring(3,5)+ iFfin.substring(0,2);
+	
+			var datofini=aData[iStartDateCol].substring(6,10) + aData[iStartDateCol].substring(3,5)+ aData[iStartDateCol].substring(0,2);
+			var datoffin=aData[iEndDateCol].substring(6,10) + aData[iEndDateCol].substring(3,5)+ aData[iEndDateCol].substring(0,2);
+	
+			if ( iFini === "" && iFfin === "" )
+			{
+				return true;
+			}
+			else if ( iFini <= datofini && iFfin === "")
+			{
+				return true;
+			}
+			else if ( iFfin >= datoffin && iFini === "")
+			{
+				return true;
+			}
+			else if (iFini <= datofini && iFfin >= datoffin)
+			{
+				return true;
+			}
+			return false;
+		},
+		
+		// Omamori
+		function( oSettings, aData, iDataIndex ) {
+			var iFini = document.getElementById('fomini').value;
+			var iFfin = document.getElementById('fomfin').value;
+			var iStartDateCol = 13;
+			var iEndDateCol = 13;
+	
+			iFini=iFini.substring(6,10) + iFini.substring(3,5)+ iFini.substring(0,2);
+			iFfin=iFfin.substring(6,10) + iFfin.substring(3,5)+ iFfin.substring(0,2);
+	
+			var datofini=aData[iStartDateCol].substring(6,10) + aData[iStartDateCol].substring(3,5)+ aData[iStartDateCol].substring(0,2);
+			var datoffin=aData[iEndDateCol].substring(6,10) + aData[iEndDateCol].substring(3,5)+ aData[iEndDateCol].substring(0,2);
+	
+			if ( iFini === "" && iFfin === "" )
+			{
+				return true;
+			}
+			else if ( iFini <= datofini && iFfin === "")
+			{
+				return true;
+			}
+			else if ( iFfin >= datoffin && iFini === "")
+			{
+				return true;
+			}
+			else if (iFini <= datofini && iFfin >= datoffin)
+			{
+				return true;
+			}
+			return false;
+		},
+
+		// Código postal
+		function( oSettings, aData, iDataIndex ) {
+			var cpmin = parseInt( $('#cpini').val(), 10 );
+			var cpmax = parseInt( $('#cpfin').val(), 10 );
+			var cp = parseFloat( aData[14] ) || 0; // use data for the cp column
+	
+			if ( ( isNaN( cpmin ) && isNaN( cpmax ) ) ||
+				( isNaN( cpmin ) && cp <= cpmax ) ||
+				( cpmin <= cp   && isNaN( cpmax ) ) ||
+				( cpmin <= cp   && cp <= cpmax ) )
+			{
+				return true;
+			}
+			return false;
+		}
+	);
+
+	// Add event listeners to the two range filtering inputs
+	$('#fini').blur( function() { table.draw(); } );
+	$('#ffin').blur( function() { table.draw(); } );
+	  
+	$('#fbaini').blur( function() { table.draw(); } );
+	$('#fbafin').blur( function() { table.draw(); } );
+
+	$('#fnacini').blur( function() { table.draw(); } );
+	$('#fnacfin').blur( function() { table.draw(); } );
+
+	$('#fesini').blur( function() { table.draw(); } );
+	$('#fesfin').blur( function() { table.draw(); } );
+
+	$('#fomini').blur( function() { table.draw(); } );
+	$('#fomfin').blur( function() { table.draw(); } );
+
+	$('#cpini').keyup( function() { table.draw(); } );
+    $('#cpfin').keyup( function() { table.draw(); } );
+	  	
+	$('.datepicker').datetimepicker({
+		format: 'DD/MM/YYYY',
+		icons: {
+			time: "fa fa-clock-o",
+			date: "fa fa-calendar",
+			up: "fa fa-chevron-up",
+			down: "fa fa-chevron-down",
+			previous: 'fa fa-chevron-left',
+			next: 'fa fa-chevron-right',
+			today: 'fa fa-screenshot',
+			clear: 'fa fa-trash',
+			close: 'fa fa-remove',
+			inline: true
+		},
+		collapse: false
+	});
+
+	$('#resetearFiltros').on('click', function() {
+		$("#resetRegionesBtn").trigger("click");
+		$("#resetDepartamentosBtn").trigger("click");
+		$("#resetEstudiosBtn").trigger("click");
+		$("#resetDepartamentosBtn+").trigger("click");
+		$("#resetAltasBtn").trigger("click");
+		$("#resetBajasBtn").trigger("click");
+		$("#resetOmamoriBtn").trigger("click");
+		$("#resetRangosBtn").trigger("click");
+
+		$('#fini').val("");
+		$('#ffin').val("");
+		$('#fesini').val("");
+		$('#fesfin').val("");
+		$('#fnacini').val("");
+		$('#fnacfin').val("");
+		$('#fbaini').val("");
+		$('#fbafin').val("");
+		$('#fomini').val("");
+		$('#fomfin').val("");
+		$('#cpini').val("");
+		$('#cpfin').val("");
+
+		aplicarFiltroInicial();
+
+		table.draw();
+	});
+} );
+</script>
+
+{% endblock %}
+
+{% 	block extra_js %}
+<!--  DataTables.net Plugin    -->
+<script src="{% static 'gestion/js/jquery.datatables.js' %}"></script>
+<script src='https://cdn.datatables.net/plug-ins/1.10.20/sorting/intl.js'></script>
+
+<script src='https://cdn.datatables.net/buttons/1.5.2/js/dataTables.buttons.min.js'></script>
+<script src='https://cdn.datatables.net/buttons/1.5.2/js/buttons.flash.min.js'></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js'></script>
+<script src='https://cdn.datatables.net/buttons/1.5.2/js/buttons.html5.min.js'></script>
+<script src='https://cdn.datatables.net/buttons/1.5.2/js/buttons.print.min.js'></script>
+{% endblock %}
