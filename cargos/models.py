@@ -151,6 +151,7 @@ class Cargo(models.Model):
             return None
         try:
             objeto = Clase.objects.get(pk=self.object_id)
+            print("aqui si que si")
         except (Clase.DoesNotExist, AttributeError):
             return None
         try:
@@ -238,6 +239,7 @@ class CargoCapacitacion(models.Model):
     
     @property
     def rango_codigo(self):
+        
         try:
             return self.rango.codigo
         except AttributeError:
@@ -285,6 +287,7 @@ class CargoCapacitacion(models.Model):
         try:
             objeto = Clase.objects.get(pk=self.object_id)
         except (Clase.DoesNotExist, AttributeError):
+            print("entrramos")
             return None
         try:
             return objeto.zona()

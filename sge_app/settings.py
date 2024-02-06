@@ -13,7 +13,10 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 import os
 import socket
 
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
+
+import pymysql
+pymysql.install_as_MySQLdb()
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -38,7 +41,12 @@ if HOSTNAME == "ns1780.cloud-premium.com":
 else:
     DEBUG = True
 
-ALLOWED_HOSTS = ["gestion-sokagakkai.org", "www.gestion-sokagakkai.org", "localhost"]
+if HOSTNAME == "pre.gestion-sokagakkai.org":
+    PRE = True
+else:
+    PRE = False
+
+ALLOWED_HOSTS = ["gestion-sokagakkai.org", "www.gestion-sokagakkai.org", "localhost", "pre.gestion-sokagakkai.org"]
 
 
 # Application definition
@@ -172,7 +180,12 @@ if DEBUG:
     PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
     STATIC_URL = "/static/"
     STATIC_ROOT = os.path.join(PROJECT_ROOT, "static")
-else:
+
+elif PRE:
+    STATIC_URL = "/"
+    STATIC_ROOT = "/home/gestions/python/pre.gestion-sokagakkai.org/public/"
+    
+else :
     STATIC_URL = "/"
     STATIC_ROOT = "/home/gestions/python/sge_app/public/"
 

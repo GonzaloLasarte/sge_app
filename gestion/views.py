@@ -225,7 +225,7 @@ def list(request):
 
 class MemberDetailView(LoginRequiredMixin, DetailView):
     model = Member
-
+    
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["opts"] = Member._meta

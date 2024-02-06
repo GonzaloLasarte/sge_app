@@ -3,20 +3,20 @@ import json
 from django.forms.widgets import (
     ClearableFileInput, Input, NumberInput, Select, Textarea,
     DateInput, URLInput, PasswordInput, EmailInput, HiddenInput)
-from django.utils.translation import ugettext_lazy
+from django.utils.translation import gettext_lazy
 
 
 class UserClearableFileInput(ClearableFileInput):
     """Custom clearable file input class."""
 
-    input_text = ugettext_lazy('Choose File')
+    input_text = gettext_lazy('Choose File')
     template_name = 'admin_customer/bootstrap/user_clearable_file_input.html'
 
 
 class UserClearableImageInput(UserClearableFileInput):
     """Custom clearable image input class."""
 
-    input_text = ugettext_lazy('Choose Image')
+    input_text = gettext_lazy('Choose Image')
     template_name = 'admin_customer/bootstrap/user_clearable_image_input.html'
 
 
