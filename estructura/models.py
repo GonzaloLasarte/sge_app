@@ -73,10 +73,14 @@ class Region(models.Model):
 
 
 class Zona(Tracker):
+    print("Nombre: ")
+
     nombre = models.CharField(max_length=50, verbose_name="zona")
     region = models.ForeignKey(Region, on_delete=models.CASCADE)
     fecha_inicio = models.DateField(auto_now_add=True)
     fecha_baja = models.DateField
+
+    
 
     TRACKED_FIELD = 'region'
 

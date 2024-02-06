@@ -181,11 +181,11 @@ if DEBUG:
     STATIC_URL = "/static/"
     STATIC_ROOT = os.path.join(PROJECT_ROOT, "static")
 
-if PRE:
+elif PRE:
     STATIC_URL = "/"
     STATIC_ROOT = "/home/gestions/python/pre.gestion-sokagakkai.org/public/"
-
-else:
+    
+else :
     STATIC_URL = "/"
     STATIC_ROOT = "/home/gestions/python/sge_app/public/"
 
