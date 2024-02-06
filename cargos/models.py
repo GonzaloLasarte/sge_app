@@ -253,7 +253,7 @@ class CargoCapacitacion(models.Model):
                                 departamento,
                                 self.get_nivel_codigo or "N",
                                 self.member,)
-
+ 
     @property
     def get_region(self):
         nombre_clase = self.nivel.nombre.replace(" ", "")
