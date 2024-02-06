@@ -245,6 +245,14 @@ class CargoCapacitacion(models.Model):
         except AttributeError:
             return ""
 
+    def __str__(self):
+        if(self is not None):
+            departamento = '' if self.departamento.nombre == 'Sin departamento' else self.departamento.nombre
+            rango_codigo = '' if self.rango_codigo == 'R' and departamento else self.rango_codigo
+            nivel_codigo = self.get_nivel_codigo or "N"
+            guion = '' if nivel_codigo == 'N' else ' - '
+            return f'{rango_codigo}{departamento}{guion}{nivel_codigo}{self.get_object_id_name}'
+
     @property
     def nombre_cargo(self):
         departamento = '' if self.departamento.nombre == 'Sin departamento' else self.departamento.nombre
@@ -253,7 +261,7 @@ class CargoCapacitacion(models.Model):
                                 departamento,
                                 self.get_nivel_codigo or "N",
                                 self.member,)
- 
+
     @property
     def get_region(self):
         nombre_clase = self.nivel.nombre.replace(" ", "")
