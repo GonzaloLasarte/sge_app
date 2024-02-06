@@ -245,13 +245,6 @@ class CargoCapacitacion(models.Model):
         except AttributeError:
             return ""
 
-    def __str__(self):
-        departamento = '' if self.departamento.nombre == 'Sin departamento' else self.departamento.nombre
-        rango_codigo = '' if self.rango_codigo == 'R' and departamento else self.rango_codigo
-        nivel_codigo = self.get_nivel_codigo or "N"
-        guion = '' if nivel_codigo == 'N' else ' - '
-        return f'{rango_codigo}{departamento}{guion}{nivel_codigo}{self.get_object_id_name}'
-
     @property
     def nombre_cargo(self):
         departamento = '' if self.departamento.nombre == 'Sin departamento' else self.departamento.nombre
@@ -287,7 +280,6 @@ class CargoCapacitacion(models.Model):
         try:
             objeto = Clase.objects.get(pk=self.object_id)
         except (Clase.DoesNotExist, AttributeError):
-            print("entrramos")
             return None
         try:
             return objeto.zona()
