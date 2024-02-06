@@ -49,7 +49,7 @@
           {% endspaceless %}
         </td>
         {% for fieldset in inline_admin_form %}
-          {% for line in fieldset %}
+          {% for line in fieldset %} 
             {% for field in line %}
               {% if field.is_readonly or not field.field.is_hidden %}
               <td{% if field.field.name %} class="field-{{ field.field.name }}"{% endif %}>
