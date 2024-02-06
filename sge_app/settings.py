@@ -41,12 +41,12 @@ if HOSTNAME == "ns1780.cloud-premium.com":
 else:
     DEBUG = True
 
-if HOSTNAME == "pre.gestion-sokagakkai.org/":
+if HOSTNAME == "pre.gestion-sokagakkai.org":
     PRE = True
 else:
     PRE = False
 
-ALLOWED_HOSTS = ["gestion-sokagakkai.org", "www.gestion-sokagakkai.org", "localhost"]
+ALLOWED_HOSTS = ["gestion-sokagakkai.org", "www.gestion-sokagakkai.org", "localhost", "pre.gestion-sokagakkai.org"]
 
 
 # Application definition
