@@ -41,6 +41,11 @@ if HOSTNAME == "ns1780.cloud-premium.com":
 else:
     DEBUG = True
 
+if HOSTNAME == "pre.gestion-sokagakkai.org/":
+    PRE = True
+else:
+    PRE = False
+
 ALLOWED_HOSTS = ["gestion-sokagakkai.org", "www.gestion-sokagakkai.org", "localhost"]
 
 
@@ -175,6 +180,11 @@ if DEBUG:
     PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
     STATIC_URL = "/static/"
     STATIC_ROOT = os.path.join(PROJECT_ROOT, "static")
+
+if PRE:
+    STATIC_URL = "/"
+    STATIC_ROOT = "/home/gestions/python/pre.gestion-sokagakkai.org/public/"
+
 else:
     STATIC_URL = "/"
     STATIC_ROOT = "/home/gestions/python/sge_app/public/"
