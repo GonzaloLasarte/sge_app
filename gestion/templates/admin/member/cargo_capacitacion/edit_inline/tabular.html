@@ -39,7 +39,7 @@
           {% if inline_admin_form.needs_explicit_pk_field %}{{ inline_admin_form.pk_field.field }}{% endif %}
           {% if inline_admin_form.fk_field %}{{ inline_admin_form.fk_field.field }}{% endif %}
           {% spaceless %}
-          {% for fieldset in inline_admin_form %}
+          {% for fieldset in inline_admin_form %} 
             {% for line in fieldset %}
               {% for field in line %}
                 {% if not field.is_readonly and field.field.is_hidden %}{{ field.field }}{% endif %}
