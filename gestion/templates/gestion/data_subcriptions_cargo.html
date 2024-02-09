@@ -20,10 +20,10 @@
                 <span
                   ><a href="/datos_suscripcion" class="card-title text-primary">Suscriptores Miembros</a> -
                 </span> 
-                {% if request.user.is_admin or request.user.is_consultor %}
+       
                 <span><b><a href="/datos_suscripcion_cargo" class="card-title text-primary">Suscriptores Cargos de responsabilidad</a></b> - </span>
                 <span><a href="/datos_suscripcion_capacitacion" class="card-title text-primary">Suscriptores Cargos de capacitación</a></span>
-                {% endif %}
+
               </div>
         <div>
             <div>
@@ -55,16 +55,16 @@
     <script>
       const data_woocomence = {{ list_client|safe }};
       const datamembers = {{ members|safe }};
+      const total_members_suscriptors = {{ total_members_suscriptors|safe }};
       let dataFilterMembers = [];
       let dataFilterRegion = [];
       let dataFilterDepart = [];
       let dataFilterLevel = [];
       let dataSaved = [];
       let cont = 0;
-      let total_suscriptors = datamembers.filter((item) => data_woocomence.some((item2) => item2.email === item.email)).length;
-     
+     console.log(datamembers);
       const title = document.getElementById('amount');
-      const total = document.getElementById('total-suscriptors').innerHTML = "Suscriptores Totales: " + " " +  " <strong>" + total_suscriptors + "</strong>";
+      //const total = document.getElementById('total-suscriptors').innerHTML = "Suscriptores Totales: " + " " +  " <strong>" + total_suscriptors + "</strong>";
 
       $("#resetearFiltros").on("click", function () {
         $("#resetRegionesBtn").trigger("click");
@@ -91,15 +91,9 @@
         }
 
         function filterDataRegion(text){
-          cont++;
           let dataFilter= []
           if(dataFilterDepart.length === 0){
-               dataFilter = datamembers.filter((item) => { 
-                if(item.region === text){
-                    return item;
-                }
-            });
-            const filterTotal = dataFilter.filter((item) => data_woocomence.some((item2) => item2.email === item.email));
+            const filterTotal = total_members_suscriptors.filter((item)=> item.region === text);
            if(filterTotal.length !== 0){
               dataFilterRegion = filterTotal;
               dataSaved = filterTotal;
@@ -123,12 +117,7 @@
           cont++;
           let dataFilter= []
           if(dataFilterRegion.length === 0 ){
-               dataFilter = datamembers.filter((item) => { 
-                if(item.departamento === text){
-                    return item;
-                }
-            });
-            const filterTotal = dataFilter.filter((item) => data_woocomence.some((item2) => item2.email === item.email));
+            const filterTotal = total_members_suscriptors.filter((item)=> item.departamento === text);
             dataFilterDepart = filterTotal;
             title.innerHTML = "Cantidad de suscriptores: " + " " +  " <strong>" + filterTotal.length + "</strong>";
           }else{
@@ -139,9 +128,10 @@
                 }
             });
 
-          const filterTotal = dataFilter.filter((item) => data_woocomence.some((item2) => item2.email === item.email));
+          const filterTotal = dataFilter
           if(filterTotal.length !== 0){
             dataFilterDepart = filterTotal;
+            dataSaved = filterTotal;
           }
           title.innerHTML = "Cantidad de suscriptores: " + " " +  " <strong>" + filterTotal.length + "</strong>";
           }
@@ -149,15 +139,9 @@
       }
 
       function filterNivel(text){
-        cont++;
         let dataFilter= []
         if(dataFilterRegion.length === 0 ){
-             dataFilter = datamembers.filter((item) => { 
-              if(item.nivel === text){
-                  return item;
-              }
-          });
-          const filterTotal = dataFilter.filter((item) => data_woocomence.some((item2) => item2.email === item.email));
+          const filterTotal = total_members_suscriptors.filter((item)=> item.nivel === text);
           dataFilterLevel = filterTotal;
           title.innerHTML = "Cantidad de suscriptores: " + " " +  " <strong>" + filterTotal.length + "</strong>";
         }else{
@@ -168,9 +152,10 @@
               }
           });
 
-        const filterTotal = dataFilter.filter((item) => data_woocomence.some((item2) => item2.email === item.email));
+        const filterTotal = dataFilter
         if(filterTotal.length !== 0){
           dataFilterLevel = filterTotal;
+          dataSaved = filterTotal;
         }
         title.innerHTML = "Cantidad de suscriptores: " + " " +  " <strong>" + filterTotal.length + "</strong>";
         }
@@ -179,7 +164,7 @@
 
       function filterDataZona(text, region){
         if(dataFilterRegion.length === 0){
-          const dataFilter = datamembers.filter((item) => { 
+          let dataFilter = total_members_suscriptors.filter((item) => { 
             if(item.zona === text && item.region === region){
                 return item;
             }
@@ -190,7 +175,7 @@
               return item;
           }
       });
-      const filterTotal = dataFilter.filter((item) => data_woocomence.some((item2) => item2.email === item.email));
+      const filterTotal = dataFilter
       dataSaved = filterTotal;
       title.innerHTML = "Cantidad de suscriptores: " + " " +  " <strong>" + filterTotal.length + "</strong>";
       }
@@ -202,7 +187,7 @@
                 return item;
             }
         });
-        const filterTotal = dataFilter.filter((item) => data_woocomence.some((item2) => item2.email === item.email));
+        const filterTotal = dataFilter
         dataSaved = filterTotal;
         title.innerHTML = "Cantidad de suscriptores: " + " " +  " <strong>" + filterTotal.length + "</strong>";
       }
@@ -212,7 +197,7 @@
                 return item;
             }
         });
-        const filterTotal = dataFilter.filter((item) => data_woocomence.some((item2) => item2.email === item.email));
+        const filterTotal = dataFilter
         dataSaved = filterTotal;
         title.innerHTML = "Cantidad de suscriptores: " + " " +  " <strong>" + filterTotal.length + "</strong>";
       }
@@ -222,7 +207,7 @@
                 return item;
             }
         });
-        const filterTotal = dataFilter.filter((item) => data_woocomence.some((item2) => item2.email === item.email));
+        const filterTotal = dataFilter
         dataSaved = filterTotal;
         title.innerHTML = "Cantidad de suscriptores: "  + " " +  " <strong>" + filterTotal.length + "</strong>";
       }

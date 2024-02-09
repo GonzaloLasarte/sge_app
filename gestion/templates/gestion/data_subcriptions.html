@@ -20,10 +20,10 @@
               <span
                 ><a href="/datos_suscripcion" class="card-title text-primary"> <b>Suscriptores Miembros</b></a> -
               </span> 
-              {% if request.user.is_admin or request.user.is_consultor %}
+
               <span><a href="/datos_suscripcion_cargo" class="card-title text-primary">Suscriptores Cargos de responsabilidad</a> - </span>
               <span><a href="/datos_suscripcion_capacitacion" class="card-title text-primary">Suscriptores Cargos de capacitación</a></span>
-              {% endif %}
+          
             </div>
             <div>
               <div class="row">
@@ -54,14 +54,16 @@
     <script>
       const data_woocomence = {{ list_client|safe }};
       const datamembers = {{ members|safe }};
+      const total_members_suscriptors = {{ total_members_suscriptors|safe }};
       let dataFilterMembers = [];
       let dataFilterRegion = [];
       let dataFilterDepart = [];
       let dataSaved = [];
-      let cont = 0
+
      
       const title = document.getElementById('amount');
-
+      console.log(total_members_suscriptors)
+      
 
       $("#resetearFiltros").on("click", function () {
         $("#resetRegionesBtn").trigger("click");
@@ -86,44 +88,35 @@
         }
 
         function filterDataRegion(text){
-          cont++;
           let dataFilter= []
           if(dataFilterDepart.length === 0){
-               dataFilter = datamembers.filter((item) => { 
-                if(item.region === text){
-                    return item;
-                }
-            });
-            const filterTotal = dataFilter.filter((item) => data_woocomence.some((item2) => item2.email === item.email));
-           if(filterTotal.length !== 0){
-              dataFilterRegion = filterTotal;
-              dataSaved = filterTotal;
+            const totalFilter = total_members_suscriptors.filter((item) => item.region === text);
+
+            //const filterTotal = dataFilter.filter((item) => data_woocomence.some((item2) => item2.email === item.email));
+           if(totalFilter.length !== 0){
+              dataFilterRegion = totalFilter;
+              dataSaved = totalFilter;
            }
-            title.innerHTML = "Cantidad de suscriptores: " + " " +  " <strong>" + filterTotal.length + "</strong>";
+            title.innerHTML = "Cantidad de suscriptores: " + " " +  " <strong>" + totalFilter.length + "</strong>";
           }else{
              dataFilter = dataFilterDepart.filter((item) => { 
               if(item.region === text){
                   return item;
               }
           });
-          const filterTotal = dataFilter.filter((item) => data_woocomence.some((item2) => item2.email === item.email));
-          if(filterTotal.length !== 0){
-            dataFilterRegion = filterTotal;
-            dataSaved = filterTotal;
+          const totalFilter = total_members_suscriptors.filter((item) => item.region === text);
+          //const filterTotal = dataFilter.filter((item) => data_woocomence.some((item2) => item2.email === item.email));
+          if(totalFilter.length !== 0){
+            dataFilterRegion = totalFilter;
+            dataSaved = totalFilter;
           }
-          title.innerHTML = "Cantidad de suscriptores: " + " " +  " <strong>" + filterTotal.length + "</strong>";
+          title.innerHTML = "Cantidad de suscriptores: " + " " +  " <strong>" + totalFilter.length + "</strong>";
           }
         }
         function filterDataDepart(text){
-          cont++;
           let dataFilter= []
           if(dataFilterRegion.length === 0 ){
-               dataFilter = datamembers.filter((item) => { 
-                if(item.departamento === text){
-                    return item;
-                }
-            });
-            const filterTotal = dataFilter.filter((item) => data_woocomence.some((item2) => item2.email === item.email));
+            const filterTotal = total_members_suscriptors.filter((item) => item.departamento === text);
             dataFilterDepart = filterTotal;
             title.innerHTML = "Cantidad de suscriptores: " + " " +  " <strong>" + filterTotal.length + "</strong>";
           }else{
@@ -134,7 +127,7 @@
                 }
             });
 
-          const filterTotal = dataFilter.filter((item) => data_woocomence.some((item2) => item2.email === item.email));
+          const filterTotal = dataFilter
           if(filterTotal.length !== 0){
             dataFilterDepart = filterTotal;
           }
@@ -144,18 +137,19 @@
       }
       function filterDataZona(text, region){
         if(dataFilterRegion.length === 0){
-          const dataFilter = datamembers.filter((item) => { 
+          let dataFilter = total_members_suscriptors.filter((item) => { 
             if(item.zona === text && item.region === region){
                 return item;
             }
         });
+        
       }else{
         dataFilter = dataFilterRegion.filter((item) => { 
           if(item.zona === text && item.region === region){
               return item;
           }
       });
-      const filterTotal = dataFilter.filter((item) => data_woocomence.some((item2) => item2.email === item.email));
+      const filterTotal = dataFilter
       dataSaved = filterTotal;
       title.innerHTML = "Cantidad de suscriptores: " + " " +  " <strong>" + filterTotal.length + "</strong>";
       }
@@ -167,7 +161,7 @@
                 return item;
             }
         });
-        const filterTotal = dataFilter.filter((item) => data_woocomence.some((item2) => item2.email === item.email));
+        const filterTotal = dataFilter
         dataSaved = filterTotal;
         title.innerHTML = "Cantidad de suscriptores: " + " " +  " <strong>" + filterTotal.length + "</strong>";
       }
@@ -177,7 +171,7 @@
                 return item;
             }
         });
-        const filterTotal = dataFilter.filter((item) => data_woocomence.some((item2) => item2.email === item.email));
+        const filterTotal = dataFilter
         dataSaved = filterTotal;
         title.innerHTML = "Cantidad de suscriptores: " + " " +  " <strong>" + filterTotal.length + "</strong>";
       }
@@ -187,7 +181,7 @@
                 return item;
             }
         });
-        const filterTotal = dataFilter.filter((item) => data_woocomence.some((item2) => item2.email === item.email));
+        const filterTotal = dataFilter
         dataSaved = filterTotal;
         title.innerHTML = "Cantidad de suscriptores: "  + " " +  " <strong>" + filterTotal.length + "</strong>";
       }

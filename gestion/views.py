@@ -1078,11 +1078,11 @@ def data_subcriptions(request):
         list_data_woocomerce = [
             dict(zip(keys_member2, [convertir_a_string(valor) for valor in tupla]))
             for tupla in data]
-        
-        emailsMemebers = {diccionario['email'] for diccionario in dataFilter}
-        emailsWoocomerce = {diccionario['email'] for diccionario in list_data_woocomerce}
-        total_suscriptors = len(emailsMemebers.intersection(emailsWoocomerce))
 
+        emailsWoocomerce = {diccionario['email'] for diccionario in list_data_woocomerce}
+       
+        total_memebers_suscriptors = [diccionario for diccionario in new_members if diccionario['email'] in emailsWoocomerce]
+        total_suscriptors = len(total_memebers_suscriptors)
        
     else:
         dataFilter = new_members
@@ -1091,21 +1091,22 @@ def data_subcriptions(request):
             dict(zip(keys_member2, [convertir_a_string(valor) for valor in tupla]))
             for tupla in data]
         #esto calcula el total que coinciden entre los dos listados por el campo email
-        emailsMemebers = {diccionario['email'] for diccionario in new_members}
         emailsWoocomerce = {diccionario['email'] for diccionario in list_data_woocomerce}
-        
-        total_suscriptors = len(emailsMemebers.intersection(emailsWoocomerce))
+        total_memebers_suscriptors = [diccionario for diccionario in new_members if diccionario['email'] in emailsWoocomerce]
+       
+        total_suscriptors = len(total_memebers_suscriptors)
+
      
-    return render(request, "gestion/data_subcriptions.html", {"list_client": list_data_woocomerce, "members": dataFilter, "regiones": regiones, "estudios": estudios, "departamentos": departamentos, "total_suscriptors": total_suscriptors})
+    return render(request, "gestion/data_subcriptions.html", {"total_members_suscriptors": total_memebers_suscriptors,"list_client": list_data_woocomerce, "members": dataFilter, "regiones": regiones, "estudios": estudios, "departamentos": departamentos, "total_suscriptors": total_suscriptors})
 @login_required
 @user_passes_test(check_expiration)
 def data_subcriptions_cargo(request):
         dataBase = pymysql.connect(
-            host= settings.DB_WOOCOMMERCE_HOST,
-            user = settings.DB_WOOCOMMERCE_USER,
-            password = settings.DB_WOOCOMMERCE_PASSWORD,
-            database = settings.DB_WOOCOMMERCE_DATABASE
-        )
+        host= settings.DB_WOOCOMMERCE_HOST,
+        user = settings.DB_WOOCOMMERCE_USER,
+        password = settings.DB_WOOCOMMERCE_PASSWORD,
+        database = settings.DB_WOOCOMMERCE_DATABASE
+    )
         cursor2 = dataBase.cursor()
         cursor2.execute("""SELECT
                             p.ID,
@@ -1179,31 +1180,41 @@ def data_subcriptions_cargo(request):
                 return valor.strftime('%Y-%m-%d')  # Ajusta el formato según tus necesidades
             return valor
         
-        list_data_woocomerce = [
-                dict(zip(keys_member2, [convertir_a_string(valor) for valor in tupla]))
-                for tupla in data
-            ]
         dataFilter = []
         if(request.user.is_superuser!=True or request.user.is_admin!=True):
-            dataFilter = [x for x in new_members if x['region_id'] == request.user.region_id and x['zona_id'] == request.user.zona_id]
+            dataFilter = [x for x in new_members if x['id_region'] == request.user.region_id and x['id_zona'] == request.user.zona_id]
             regiones = [region.nombre for region in Region.objects.all() if region.id == request.user.region_id]
-            departamentos = [departamento.nombre for departamento in Departamento.objects.all() if departamento.id == request.user.departamento_id]
-            rangos = [rango.nombre for rango in Rango.objects.all() if rango.id == request.user.rango_id]
-            nivel = [nivel.nombre for nivel in Nivel.objects.all() if nivel.id == request.user.nivel_id]
+     
             
+            list_data_woocomerce = [
+            dict(zip(keys_member2, [convertir_a_string(valor) for valor in tupla]))
+            for tupla in data]
+        
+            emailsWoocomerce = {diccionario['email'] for diccionario in list_data_woocomerce}
+       
+            total_memebers_suscriptors = [diccionario for diccionario in new_members if diccionario['email'] in emailsWoocomerce]
+            total_suscriptors = len(total_memebers_suscriptors)
         else:
             dataFilter = new_members
+            list_data_woocomerce = [
+            dict(zip(keys_member2, [convertir_a_string(valor) for valor in tupla]))
+            for tupla in data]
+            #esto calcula el total que coinciden entre los dos listados por el campo email
+            emailsWoocomerce = {diccionario['email'] for diccionario in list_data_woocomerce}
+            total_memebers_suscriptors = [diccionario for diccionario in new_members if diccionario['email'] in emailsWoocomerce]
         
-        return render(request, "gestion/data_subcriptions_cargo.html", {"list_client": list_data_woocomerce, "members": dataFilter, "regiones": regiones, "estudios": estudios, "departamentos": departamentos, "rangos": rangos, "niveles": nivel})
+            total_suscriptors = len(total_memebers_suscriptors)
+        
+        return render(request, "gestion/data_subcriptions_cargo.html", {"total_members_suscriptors": total_memebers_suscriptors,"list_client": list_data_woocomerce, "members": dataFilter, "regiones": regiones, "estudios": estudios, "departamentos": departamentos, "rangos": rangos, "niveles": nivel, "total_suscriptors": total_suscriptors})
 @login_required
 @user_passes_test(check_expiration)
 def data_subcriptions_capacitacion(request):
         dataBase = pymysql.connect(
-            host= settings.DB_WOOCOMMERCE_HOST,
-            user = settings.DB_WOOCOMMERCE_USER,
-            password = settings.DB_WOOCOMMERCE_PASSWORD,
-            database = settings.DB_WOOCOMMERCE_DATABASE
-        )
+        host= settings.DB_WOOCOMMERCE_HOST,
+        user = settings.DB_WOOCOMMERCE_USER,
+        password = settings.DB_WOOCOMMERCE_PASSWORD,
+        database = settings.DB_WOOCOMMERCE_DATABASE
+    )
         cursor2 = dataBase.cursor()
         cursor2.execute("""SELECT
                             p.ID,
@@ -1269,17 +1280,29 @@ def data_subcriptions_capacitacion(request):
                 return valor.strftime('%Y-%m-%d')  # Ajusta el formato según tus necesidades
             return valor
         
-        list_data_woocomerce = [
+        dataFilter = []
+        if(request.user.is_superuser!=True or request.user.is_admin!=True):
+            dataFilter = [x for x in new_members if x['id_region'] == request.user.region_id and x['id_zona'] == request.user.zona_id]
+
+            
+            list_data_woocomerce = [
             dict(zip(keys_member2, [convertir_a_string(valor) for valor in tupla]))
             for tupla in data]
         
-        dataFilter = []
-        if(request.user.is_superuser!=True or request.user.is_admin!=True):
-            dataFilter = [x for x in new_members if x['region_id'] == request.user.region_id and x['zona_id'] == request.user.zona_id]
-            regiones = [region.nombre for region in Region.objects.all() if region.id == request.user.region_id]
-            departamentos = [departamento.nombre for departamento in Departamento.objects.all() if departamento.id == request.user.departamento_id]
-            
+            emailsWoocomerce = {diccionario['email'] for diccionario in list_data_woocomerce}
+       
+            total_memebers_suscriptors = [diccionario for diccionario in new_members if diccionario['email'] in emailsWoocomerce]
+            total_suscriptors = len(total_memebers_suscriptors)
         else:
             dataFilter = new_members
+            list_data_woocomerce = [
+            dict(zip(keys_member2, [convertir_a_string(valor) for valor in tupla]))
+            for tupla in data]
+            #esto calcula el total que coinciden entre los dos listados por el campo email
+            emailsWoocomerce = {diccionario['email'] for diccionario in list_data_woocomerce}
+            total_memebers_suscriptors = [diccionario for diccionario in new_members if diccionario['email'] in emailsWoocomerce]
         
-        return render(request, "gestion/data_subcriptions_capacitacion.html", {"list_client": list_data_woocomerce, "members": dataFilter, "regiones": regiones, "estudios": estudios, "departamentos": departamentos}) 
+            total_suscriptors = len(total_memebers_suscriptors)
+           
+        
+        return render(request, "gestion/data_subcriptions_capacitacion.html", {"total_members_suscriptors": total_memebers_suscriptors,"list_client": list_data_woocomerce, "members": dataFilter, "regiones": regiones, "estudios": estudios, "departamentos": departamentos, "total_suscriptors": total_suscriptors}) 
