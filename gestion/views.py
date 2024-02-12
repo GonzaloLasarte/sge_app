@@ -1193,7 +1193,16 @@ def data_subcriptions_cargo(request):
             emailsWoocomerce = {diccionario['email'] for diccionario in list_data_woocomerce}
        
             total_memebers_suscriptors = [diccionario for diccionario in new_members if diccionario['email'] in emailsWoocomerce]
-            total_suscriptors = len(total_memebers_suscriptors)
+            emails_set = set()
+            # Filtrar la lista total_memebers_suscriptors eliminando elementos duplicados por correo electrónico
+            total_members_suscriptors_unique = []
+            for diccionario in total_memebers_suscriptors:
+                if diccionario['email'] not in emails_set:
+                    emails_set.add(diccionario['email'])
+                    total_members_suscriptors_unique.append(diccionario)
+
+            
+            total_suscriptors = len(total_members_suscriptors_unique)
         else:
             dataFilter = new_members
             list_data_woocomerce = [
@@ -1300,7 +1309,16 @@ def data_subcriptions_capacitacion(request):
             emailsWoocomerce = {diccionario['email'] for diccionario in list_data_woocomerce}
        
             total_memebers_suscriptors = [diccionario for diccionario in new_members if diccionario['email'] in emailsWoocomerce]
-            total_suscriptors = len(total_memebers_suscriptors)
+            emails_set = set()
+            # Filtrar la lista total_memebers_suscriptors eliminando elementos duplicados por correo electrónico
+            total_members_suscriptors_unique = []
+            for diccionario in total_memebers_suscriptors:
+                if diccionario['email'] not in emails_set:
+                    emails_set.add(diccionario['email'])
+                    total_members_suscriptors_unique.append(diccionario)
+
+            
+            total_suscriptors = len(total_members_suscriptors_unique)
         else:
             dataFilter = new_members
             list_data_woocomerce = [
