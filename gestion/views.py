@@ -1202,10 +1202,18 @@ def data_subcriptions_cargo(request):
             #esto calcula el total que coinciden entre los dos listados por el campo email
             emailsWoocomerce = {diccionario['email'] for diccionario in list_data_woocomerce}
             total_memebers_suscriptors = [diccionario for diccionario in new_members if diccionario['email'] in emailsWoocomerce]
+            emails_set = set()
+            # Filtrar la lista total_memebers_suscriptors eliminando elementos duplicados por correo electrónico
+            total_members_suscriptors_unique = []
+            for diccionario in total_memebers_suscriptors:
+                if diccionario['email'] not in emails_set:
+                    emails_set.add(diccionario['email'])
+                    total_members_suscriptors_unique.append(diccionario)
+
+            
+            total_suscriptors = len(total_members_suscriptors_unique)
         
-            total_suscriptors = len(total_memebers_suscriptors)
-        
-        return render(request, "gestion/data_subcriptions_cargo.html", {"total_members_suscriptors": total_memebers_suscriptors,"list_client": list_data_woocomerce, "members": dataFilter, "regiones": regiones, "estudios": estudios, "departamentos": departamentos, "rangos": rangos, "niveles": nivel, "total_suscriptors": total_suscriptors})
+        return render(request, "gestion/data_subcriptions_cargo.html", {"total_members_suscriptors": total_members_suscriptors_unique,"list_client": list_data_woocomerce, "members": dataFilter, "regiones": regiones, "estudios": estudios, "departamentos": departamentos, "rangos": rangos, "niveles": nivel, "total_suscriptors": total_suscriptors})
 @login_required
 @user_passes_test(check_expiration)
 def data_subcriptions_capacitacion(request):
@@ -1302,7 +1310,16 @@ def data_subcriptions_capacitacion(request):
             emailsWoocomerce = {diccionario['email'] for diccionario in list_data_woocomerce}
             total_memebers_suscriptors = [diccionario for diccionario in new_members if diccionario['email'] in emailsWoocomerce]
         
-            total_suscriptors = len(total_memebers_suscriptors)
+            emails_set = set()
+            # Filtrar la lista total_memebers_suscriptors eliminando elementos duplicados por correo electrónico
+            total_members_suscriptors_unique = []
+            for diccionario in total_memebers_suscriptors:
+                if diccionario['email'] not in emails_set:
+                    emails_set.add(diccionario['email'])
+                    total_members_suscriptors_unique.append(diccionario)
+
+            
+            total_suscriptors = len(total_members_suscriptors_unique)
            
         
-        return render(request, "gestion/data_subcriptions_capacitacion.html", {"total_members_suscriptors": total_memebers_suscriptors,"list_client": list_data_woocomerce, "members": dataFilter, "regiones": regiones, "estudios": estudios, "departamentos": departamentos, "total_suscriptors": total_suscriptors}) 
+        return render(request, "gestion/data_subcriptions_capacitacion.html", {"total_members_suscriptors": total_members_suscriptors_unique,"list_client": list_data_woocomerce, "members": dataFilter, "regiones": regiones, "estudios": estudios, "departamentos": departamentos, "total_suscriptors": total_suscriptors}) 
