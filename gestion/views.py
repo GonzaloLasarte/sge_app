@@ -1071,8 +1071,8 @@ def data_subcriptions(request):
             return valor
     
     dataFilter = []
-    if(request.user.is_superuser!=True or request.user.is_admin!=True or request.user.is_nacional!=True):
-        dataFilter = [x for x in new_members if x['region_id'] == request.user.region_id]
+    if(request.user.is_superuser!=True or request.user.is_admin!=True):
+        dataFilter = [x for x in new_members if x['region_id'] == request.user.region_id and x['zona_id'] == request.user.zona_id]
         regiones = [region.nombre for region in Region.objects.all() if region.id == request.user.region_id]
         
         list_data_woocomerce = [
@@ -1181,8 +1181,8 @@ def data_subcriptions_cargo(request):
             return valor
         
         dataFilter = []
-        if(request.user.is_superuser!=True or request.user.is_admin!=True or request.user.is_nacional!=True):
-            dataFilter = [x for x in new_members if x['id_region'] == request.user.region_id]
+        if(request.user.is_superuser!=True or request.user.is_admin!=True):
+            dataFilter = [x for x in new_members if x['id_region'] == request.user.region_id and x['id_zona'] == request.user.zona_id]
             regiones = [region.nombre for region in Region.objects.all() if region.id == request.user.region_id]
      
             
@@ -1298,9 +1298,10 @@ def data_subcriptions_capacitacion(request):
             return valor
         
         dataFilter = []
-        if(request.user.is_superuser!=True or request.user.is_admin!=True or request.user.is_nacional!=True):
-            dataFilter = [x for x in new_members if x['id_region'] == request.user.region_id]
+        if(request.user.is_superuser!=True or request.user.is_admin!=True):
+            dataFilter = [x for x in new_members if x['id_region'] == request.user.region_id and x['id_zona'] == request.user.zona_id]
 
+            
             list_data_woocomerce = [
             dict(zip(keys_member2, [convertir_a_string(valor) for valor in tupla]))
             for tupla in data]
