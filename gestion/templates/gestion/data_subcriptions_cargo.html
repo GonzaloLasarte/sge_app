@@ -62,7 +62,7 @@
       let dataFilterLevel = [];
       let dataSaved = [];
       let cont = 0;
-
+     
       const title = document.getElementById('amount');
 
       $("#resetearFiltros").on("click", function () {
@@ -111,6 +111,7 @@
           }
           title.innerHTML = "Cantidad de suscriptores: " + " " +  " <strong>" + filterTotal.length + "</strong>";
           }
+          console.log(dataSaved)
         }
         function filterDataDepart(text){
           cont++;
@@ -162,27 +163,30 @@
     }
 
       function filterDataZona(text, region){
+        console.log(text, region)
         if(dataFilterRegion.length === 0){
           let dataFilter = total_members_suscriptors.filter((item) => { 
-            if(item.zona === text && item.region === region){
+            console.log('adasda')
+            if(item.zona_cargo === text && item.region === region){
                 return item;
             }
         });
       }else{
         dataFilter = dataFilterRegion.filter((item) => { 
-          if(item.zona === text && item.region === region){
+          if(item.zona_cargo === text && item.region === region){
               return item;
           }
       });
       const filterTotal = dataFilter
       dataSaved = filterTotal;
       title.innerHTML = "Cantidad de suscriptores: " + " " +  " <strong>" + filterTotal.length + "</strong>";
+      console.log(dataSaved)
       }
 
       }
       function filterDataDG(text, zona){
         const dataFilter = dataFilterRegion.filter((item) => { 
-            if(item.distrito_general === text && item.zona === zona){
+            if(item.distrito_general === text && item.zona_cargo === zona){
                 return item;
             }
         });
@@ -192,7 +196,7 @@
       }
       function filterDataDistrito(text, zona){
         const dataFilter = dataFilterRegion.filter((item) => { 
-            if(item.distrito === text && item.zona === zona){
+            if(item.distrito === text && item.zona_cargo === zona){
                 return item;
             }
         });
@@ -202,7 +206,7 @@
       }
       function filterDataGrupo(text, zona){
         const dataFilter = dataFilterRegion.filter((item) => { 
-            if(item.grupo === text && item.zona === zona){
+            if(item.grupo === text && item.zona_cargo === zona){
                 return item;
             }
         });
@@ -405,7 +409,7 @@
         // zonas
         function rellenarZonas(region) {
           $("#zonasBtn").show();
-          var zonas = [...new Set(datamembers.map(objeto => objeto.region === region ? objeto.zona : null))].filter((item) => item !== null).sort();
+          var zonas = [...new Set(total_members_suscriptors.map(objeto => objeto.region === region ? objeto.zona : null))].filter((item) => item !== null).sort();
           var htmlContent = '<li class="dropdown-header">Seleccione zona</li>';
           $("#zonasList").html(htmlContent);
           var i;
@@ -451,7 +455,7 @@
         // DG
         function rellenarDG(zona) {
           $("#DGBtn").show();
-          var DGs = [...new Set(datamembers.map(objeto => objeto.zona === zona ? objeto.distrito_general: null))].filter((item) => item !== null).sort();
+          var DGs = [...new Set(total_members_suscriptors.map(objeto => objeto.zona === zona ? objeto.distrito_general: null))].filter((item) => item !== null).sort();
           var htmlContent = '<li class="dropdown-header">Seleccione DG</li>';
           $("#DGList").html(htmlContent);
           var i;
@@ -492,7 +496,7 @@
         // Distrito
         function rellenarDistrito(zona, val) {
           $("#distritosBtn").show();
-          var distritos = [...new Set(datamembers.map(objeto => objeto.distrito_general === val ? objeto.distrito : null))].filter((item) => item !== null).sort();
+          var distritos = [...new Set(dataSaved.map(objeto => objeto.distrito_general === val ? objeto.distrito : null))].filter((item) => item !== null).sort();
           var htmlContent = '<li class="dropdown-header">Seleccione distrito</li>';
           $("#distritosList").html(htmlContent);
           var i;
@@ -528,7 +532,7 @@
         // Grupo
         function rellenarGrupo(zona, val) {
           $("#gruposBtn").show();
-          var grupos = [...new Set(datamembers.map(objeto => objeto.distrito === val ? objeto.grupo : null))].filter((item) => item !== null).sort();
+          var grupos = [...new Set(dataSaved.map(objeto => objeto.distrito === val ? objeto.grupo : null))].filter((item) => item !== null).sort();
           var htmlContent = '<li class="dropdown-header">Seleccione grupo</li>';
           $("#gruposList").html(htmlContent);
           var i;

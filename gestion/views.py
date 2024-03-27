@@ -997,10 +997,10 @@ def change_password(request):
 def data_subcriptions(request):
     members= []
     dataBase = pymysql.connect(
-        host= settings.DB_WOOCOMMERCE_HOST,
-        user = settings.DB_WOOCOMMERCE_USER,
-        password = settings.DB_WOOCOMMERCE_PASSWORD,
-        database = settings.DB_WOOCOMMERCE_DATABASE
+        host= 'localhost',#settings.DB_WOOCOMMERCE_HOST,
+        user = 'root',#settings.DB_WOOCOMMERCE_USER,
+        #password = '',#settings.DB_WOOCOMMERCE_PASSWORD,
+        database = 'edicion7_sgsfscwq20w'#settings.DB_WOOCOMMERCE_DATABASE
     )
     cursor2 = dataBase.cursor()
     cursor2.execute("""SELECT
@@ -1105,7 +1105,6 @@ def data_subcriptions(request):
        
             total_memebers_suscriptors = [diccionario for diccionario in new_members if diccionario['email'] in emailsWoocomerce]
             total_suscriptors = len(total_memebers_suscriptors)
-
     else:
         dataFilter = new_members
 
@@ -1124,10 +1123,10 @@ def data_subcriptions(request):
 @user_passes_test(check_expiration)
 def data_subcriptions_cargo(request):
         dataBase = pymysql.connect(
-        host= settings.DB_WOOCOMMERCE_HOST,
-        user = settings.DB_WOOCOMMERCE_USER,
-        password = settings.DB_WOOCOMMERCE_PASSWORD,
-        database = settings.DB_WOOCOMMERCE_DATABASE
+        host= 'localhost',#settings.DB_WOOCOMMERCE_HOST,
+        user = 'root',#settings.DB_WOOCOMMERCE_USER,
+        #password = '',#settings.DB_WOOCOMMERCE_PASSWORD,
+        database = 'edicion7_sgsfscwq20w'#settings.DB_WOOCOMMERCE_DATABASE
     )
         cursor2 = dataBase.cursor()
         cursor2.execute("""SELECT
@@ -1262,6 +1261,7 @@ def data_subcriptions_cargo(request):
                 
                 total_suscriptors = len(total_members_suscriptors_unique)
         else:
+           
             dataFilter = new_members
             list_data_woocomerce = [
             dict(zip(keys_member2, [convertir_a_string(valor) for valor in tupla]))
@@ -1285,10 +1285,10 @@ def data_subcriptions_cargo(request):
 @user_passes_test(check_expiration)
 def data_subcriptions_capacitacion(request):
         dataBase = pymysql.connect(
-        host= settings.DB_WOOCOMMERCE_HOST,
-        user = settings.DB_WOOCOMMERCE_USER,
-        password = settings.DB_WOOCOMMERCE_PASSWORD,
-        database = settings.DB_WOOCOMMERCE_DATABASE
+        host= 'localhost',#settings.DB_WOOCOMMERCE_HOST,
+        user = 'root',#settings.DB_WOOCOMMERCE_USER,
+        #password = '',#settings.DB_WOOCOMMERCE_PASSWORD,
+        database = 'edicion7_sgsfscwq20w'#settings.DB_WOOCOMMERCE_DATABASE
     )
         cursor2 = dataBase.cursor()
         cursor2.execute("""SELECT

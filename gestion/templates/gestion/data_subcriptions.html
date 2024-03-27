@@ -220,8 +220,10 @@
 
         // zonas
         function rellenarZonas(region) {
+          console.log(region);
+          console.log(total_members_suscriptors);
           $("#zonasBtn").show();
-          var zonas = [...new Set(datamembers.map(objeto => objeto.region === region ? objeto.zona : null))].filter((item) => item !== null).sort();
+          var zonas = [...new Set(total_members_suscriptors.map(objeto => objeto.region === region ? objeto.zona : null))].filter((item) => item !== null).sort();
           var htmlContent = '<li class="dropdown-header">Seleccione zona</li>';
           $("#zonasList").html(htmlContent);
           var i;
@@ -267,7 +269,7 @@
         // DG
         function rellenarDG(zona) {
           $("#DGBtn").show();
-          var DGs = [...new Set(datamembers.map(objeto => objeto.zona === zona ? objeto.distrito_general: null))].filter((item) => item !== null).sort();
+          var DGs = [...new Set(total_members_suscriptors.map(objeto => objeto.zona === zona ? objeto.distrito_general: null))].filter((item) => item !== null).sort();
           var htmlContent = '<li class="dropdown-header">Seleccione DG</li>';
           $("#DGList").html(htmlContent);
           var i;
