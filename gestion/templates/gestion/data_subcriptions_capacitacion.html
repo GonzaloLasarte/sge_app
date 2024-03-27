@@ -112,6 +112,7 @@
         dataSaved = totalFilter;
       }
       title.innerHTML = "Cantidad de suscriptores: " + " " +  " <strong>" + totalFilter.length + "</strong>";
+      console.log(dataSaved)
       }
     }
     function filterDataDepart(text){
@@ -139,26 +140,27 @@
   function filterDataZona(text, region){
     if(dataFilterRegion.length === 0){
       let dataFilter = total_members_suscriptors.filter((item) => { 
-        if(item.zona === text && item.region === region){
+        if(item.zona_cargo === text && item.region === region){
             return item;
         }
     });
     
   }else{
     dataFilter = dataFilterRegion.filter((item) => { 
-      if(item.zona === text && item.region === region){
+      if(item.zona_cargo === text && item.region === region){
           return item;
       }
   });
   const filterTotal = dataFilter
   dataSaved = filterTotal;
   title.innerHTML = "Cantidad de suscriptores: " + " " +  " <strong>" + filterTotal.length + "</strong>";
+  console.log(dataSaved)
   }
 
   }
   function filterDataDG(text, zona){
     const dataFilter = dataFilterRegion.filter((item) => { 
-        if(item.distrito_general === text && item.zona === zona){
+        if(item.distrito_general === text && item.zona_cargo === zona){
             return item;
         }
     });
@@ -168,7 +170,7 @@
   }
   function filterDataDistrito(text, zona){
     const dataFilter = dataFilterRegion.filter((item) => { 
-        if(item.distrito === text && item.zona === zona){
+        if(item.distrito === text && item.zona_cargo === zona){
             return item;
         }
     });
@@ -178,7 +180,7 @@
   }
   function filterDataGrupo(text, zona){
     const dataFilter = dataFilterRegion.filter((item) => { 
-        if(item.grupo === text && item.zona === zona){
+        if(item.grupo === text && item.zona_cargo === zona){
             return item;
         }
     });
