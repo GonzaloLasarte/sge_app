@@ -1074,29 +1074,32 @@ def data_subcriptions(request):
     if(request.user.is_superuser!=True or request.user.is_admin!=True):
         if(request.user.is_consultor and request.user.is_nacional):
             dataFilter = new_members
+
             list_data_woocomerce = [
                 dict(zip(keys_member2, [convertir_a_string(valor) for valor in tupla]))
                 for tupla in data]
             emailsWoocomerce = {diccionario['email'] for diccionario in list_data_woocomerce}
             total_memebers_suscriptors = [diccionario for diccionario in new_members if diccionario['email'] in emailsWoocomerce]
             total_suscriptors = len(total_memebers_suscriptors)
+
         elif(request.user.is_consultor and request.user.is_region):
-            print("entro")
             dataFilter = [x for x in new_members if x['region_id'] == request.user.region_id]
-            print(dataFilter)
             list_data_woocomerce = [
                 dict(zip(keys_member2, [convertir_a_string(valor) for valor in tupla]))
                 for tupla in data]
+
             emailsWoocomerce = {diccionario['email'] for diccionario in list_data_woocomerce}
+       
             total_memebers_suscriptors = [diccionario for diccionario in new_members if diccionario['email'] in emailsWoocomerce]
             total_suscriptors = len(total_memebers_suscriptors)
+
         else:
             dataFilter = [x for x in new_members if x['region_id'] == request.user.region_id and x['zona_id'] == request.user.zona_id]
             regiones = [region.nombre for region in Region.objects.all() if region.id == request.user.region_id]
         
             list_data_woocomerce = [
-            dict(zip(keys_member2, [convertir_a_string(valor) for valor in tupla]))
-            for tupla in data]
+                dict(zip(keys_member2, [convertir_a_string(valor) for valor in tupla]))
+                for tupla in data]
 
             emailsWoocomerce = {diccionario['email'] for diccionario in list_data_woocomerce}
        
@@ -1205,6 +1208,7 @@ def data_subcriptions_cargo(request):
                 list_data_woocomerce = [
                 dict(zip(keys_member2, [convertir_a_string(valor) for valor in tupla]))
                 for tupla in data]
+                #esto calcula el total que coinciden entre los dos listados por el campo email
                 emailsWoocomerce = {diccionario['email'] for diccionario in list_data_woocomerce}
                 total_memebers_suscriptors = [diccionario for diccionario in new_members if diccionario['email'] in emailsWoocomerce]
                 emails_set = set()
@@ -1214,16 +1218,17 @@ def data_subcriptions_cargo(request):
                     if diccionario['email'] not in emails_set:
                         emails_set.add(diccionario['email'])
                         total_members_suscriptors_unique.append(diccionario)
-
                 
                 total_suscriptors = len(total_members_suscriptors_unique)
             elif(request.user.is_consultor and request.user.is_region):
-                print("entro", request.user.region_id)
-                dataFilter = [x for x in new_members if x['id_region_cargo'] == request.user.region_id]
+                dataFilter = [x for x in new_members if x['id_region'] == request.user.region_id]
+                
                 list_data_woocomerce = [
                 dict(zip(keys_member2, [convertir_a_string(valor) for valor in tupla]))
                 for tupla in data]
+            
                 emailsWoocomerce = {diccionario['email'] for diccionario in list_data_woocomerce}
+        
                 total_memebers_suscriptors = [diccionario for diccionario in new_members if diccionario['email'] in emailsWoocomerce]
                 emails_set = set()
                 # Filtrar la lista total_memebers_suscriptors eliminando elementos duplicados por correo electrónico
@@ -1236,17 +1241,14 @@ def data_subcriptions_cargo(request):
                 
                 total_suscriptors = len(total_members_suscriptors_unique)
             else:
-                print("entro2", request.user.region_id)
                 dataFilter = [x for x in new_members if x['id_region'] == request.user.region_id and x['id_zona'] == request.user.zona_id]
                 regiones = [region.nombre for region in Region.objects.all() if region.id == request.user.region_id]
-        
-                
+
                 list_data_woocomerce = [
                 dict(zip(keys_member2, [convertir_a_string(valor) for valor in tupla]))
                 for tupla in data]
-            
+                #esto calcula el total que coinciden entre los dos listados por el campo email
                 emailsWoocomerce = {diccionario['email'] for diccionario in list_data_woocomerce}
-        
                 total_memebers_suscriptors = [diccionario for diccionario in new_members if diccionario['email'] in emailsWoocomerce]
                 emails_set = set()
                 # Filtrar la lista total_memebers_suscriptors eliminando elementos duplicados por correo electrónico
@@ -1356,34 +1358,32 @@ def data_subcriptions_capacitacion(request):
         dataFilter = []
         if(request.user.is_superuser!=True or request.user.is_admin!=True):
             if(request.user.is_consultor and request.user.is_nacional):
-                    print('asdasdasdas adsdasdsdsads')
-                    dataFilter = new_members
-                    list_data_woocomerce = [
-                    dict(zip(keys_member2, [convertir_a_string(valor) for valor in tupla]))
-                    for tupla in data]
-                    #esto calcula el total que coinciden entre los dos listados por el campo email
-                    emailsWoocomerce = {diccionario['email'] for diccionario in list_data_woocomerce}
-                    total_memebers_suscriptors = [diccionario for diccionario in new_members if diccionario['email'] in emailsWoocomerce]
-                
-                    emails_set = set()
-                    # Filtrar la lista total_memebers_suscriptors eliminando elementos duplicados por correo electrónico
-                    total_members_suscriptors_unique = []
-                    for diccionario in total_memebers_suscriptors:
-                        if diccionario['email'] not in emails_set:
-                            emails_set.add(diccionario['email'])
-                            total_members_suscriptors_unique.append(diccionario)
-
-                    
-                    total_suscriptors = len(total_members_suscriptors_unique)
-            elif(request.user.is_consultor and request.user.is_region):
-                dataFilter = [x for x in new_members if x['id_region_cargo'] == request.user.region_id]
+                dataFilter = new_members
                 list_data_woocomerce = [
                 dict(zip(keys_member2, [convertir_a_string(valor) for valor in tupla]))
                 for tupla in data]
                 #esto calcula el total que coinciden entre los dos listados por el campo email
                 emailsWoocomerce = {diccionario['email'] for diccionario in list_data_woocomerce}
                 total_memebers_suscriptors = [diccionario for diccionario in new_members if diccionario['email'] in emailsWoocomerce]
+                emails_set = set()
+                # Filtrar la lista total_memebers_suscriptors eliminando elementos duplicados por correo electrónico
+                total_members_suscriptors_unique = []
+                for diccionario in total_memebers_suscriptors:
+                    if diccionario['email'] not in emails_set:
+                        emails_set.add(diccionario['email'])
+                        total_members_suscriptors_unique.append(diccionario)
+                
+                total_suscriptors = len(total_members_suscriptors_unique)
+            elif(request.user.is_consultor and request.user.is_region):
+                dataFilter = [x for x in new_members if x['id_region'] == request.user.region_id]
+                
+                list_data_woocomerce = [
+                dict(zip(keys_member2, [convertir_a_string(valor) for valor in tupla]))
+                for tupla in data]
             
+                emailsWoocomerce = {diccionario['email'] for diccionario in list_data_woocomerce}
+        
+                total_memebers_suscriptors = [diccionario for diccionario in new_members if diccionario['email'] in emailsWoocomerce]
                 emails_set = set()
                 # Filtrar la lista total_memebers_suscriptors eliminando elementos duplicados por correo electrónico
                 total_members_suscriptors_unique = []
@@ -1395,15 +1395,14 @@ def data_subcriptions_capacitacion(request):
                 
                 total_suscriptors = len(total_members_suscriptors_unique)
             else:
-                dataFilter = [x for x in new_members if x['id_region_cargo'] == request.user.region_id and x['id_zona'] == request.user.zona_id]
+                dataFilter = [x for x in new_members if x['id_region'] == request.user.region_id and x['id_zona'] == request.user.zona_id]
+                regiones = [region.nombre for region in Region.objects.all() if region.id == request.user.region_id]
 
-                
                 list_data_woocomerce = [
                 dict(zip(keys_member2, [convertir_a_string(valor) for valor in tupla]))
                 for tupla in data]
-            
+                #esto calcula el total que coinciden entre los dos listados por el campo email
                 emailsWoocomerce = {diccionario['email'] for diccionario in list_data_woocomerce}
-        
                 total_memebers_suscriptors = [diccionario for diccionario in new_members if diccionario['email'] in emailsWoocomerce]
                 emails_set = set()
                 # Filtrar la lista total_memebers_suscriptors eliminando elementos duplicados por correo electrónico
@@ -1423,7 +1422,6 @@ def data_subcriptions_capacitacion(request):
             #esto calcula el total que coinciden entre los dos listados por el campo email
             emailsWoocomerce = {diccionario['email'] for diccionario in list_data_woocomerce}
             total_memebers_suscriptors = [diccionario for diccionario in new_members if diccionario['email'] in emailsWoocomerce]
-        
             emails_set = set()
             # Filtrar la lista total_memebers_suscriptors eliminando elementos duplicados por correo electrónico
             total_members_suscriptors_unique = []
